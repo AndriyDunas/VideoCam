@@ -1,0 +1,3 @@
+D:\Other\Synced\politeh\5k2s\master\VideoApp\VideoApp\obj\x86\Release\VideoApp.Form1.resources
+D:\Other\Synced\politeh\5k2s\master\VideoApp\VideoApp\obj\x86\Release\VideoApp.Properties.Resources.resources
+D:\Other\Synced\politeh\5k2s\master\VideoApp\VideoApp\obj\x86\Release\VideoApp.csproj.GenerateResource.Cache
