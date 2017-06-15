@@ -10,6 +10,8 @@ using MetriCam;
 using AForge;
 using AForge.Video.DirectShow;
 using System.Timers;
+using System.IO;
+using System.Threading;
 
 namespace VideoApp
 {
@@ -18,7 +20,8 @@ namespace VideoApp
         private WebCam camera;
 
         System.Timers.Timer aTimer;
-
+        private EventWaitHandle waitHandle = new EventWaitHandle(true, EventResetMode.AutoReset, "SHARED_BY_ALL_PROCESSES");
+        bool writingToFile = false;
 
         public Form1()
         {
@@ -27,7 +30,7 @@ namespace VideoApp
 
             aTimer = new System.Timers.Timer();
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            aTimer.Interval = 5000;
+            aTimer.Interval = 3000;
             aTimer.Enabled = true;
         }
 
@@ -38,42 +41,68 @@ namespace VideoApp
             {
                 camera.Connect();
                 //button1.Text = "&Disconnect";
-                backgroundWorker1.RunWorkerAsync();
+                //backgroundWorker1.RunWorkerAsync();
             }
             else
             {
-                StoreFrame(camera);
-                backgroundWorker1.CancelAsync();
+                if (!writingToFile)
+                {
+                    StoreFrame(camera);
+                }
+                //backgroundWorker1.CancelAsync();
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!camera.IsConnected())
+            List<Color> pixels = new List<Color>();
+            Bitmap bmp = new Bitmap(50, 50);
+
+            using (var reader = new StreamReader("bmpmap.txt"))
             {
-                camera.Connect();
-                button1.Text = "&Disconnect";
-                backgroundWorker1.RunWorkerAsync();
+                string all = reader.ReadToEnd();
+                char[] separator = {'\r', '\n', ' '};
+                string[] words = all.Split(separator);
+
+                for (int i = 0; words.Length - i > 2 ; i += 2)
+                {
+                    string binaryR = words[i];
+                    string binaryG = words[++i];
+                    string binaryB = words[++i];
+                    
+
+                    Int32[] rgb = new Int32[3];
+                    rgb[0] = Convert.ToInt32(binaryR, 2);
+                    rgb[1] = Convert.ToInt32(binaryG, 2);
+                    rgb[2] = Convert.ToInt32(binaryB, 2);
+
+                    Color color = Color.FromArgb(rgb[0], rgb[1], rgb[2]);
+                    pixels.Add(color);
+                }
             }
-            else
+
+            for (int y = 0; y < 50; y++)
             {
-                StoreFrame(camera);
-                backgroundWorker1.CancelAsync();
+                for (int x = 0; x < 50; ++x)
+                {
+                    bmp.SetPixel(x, y, pixels[50*y + x]); 
+                }
             }
+            pictureBox1.Image = bmp;
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            while (!backgroundWorker1.CancellationPending)
-            {
-                camera.Update();
-                pictureBox1.Image = camera.GetBitmap();
-            }
+            //while (!backgroundWorker1.CancellationPending)
+            //{
+            //    camera.Update();
+            //    pictureBox1.Image = camera.GetBitmap();
+            //}
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            camera.Disconnect();
+            //camera.Disconnect();
             //button1.Text = "&Connect";
         }
 
@@ -81,62 +110,45 @@ namespace VideoApp
         /// Get a Bitmap object (if supported) from the camera and store it as "bitmap.bmp" in the current directory.
         /// </summary>
         /// <param name="camera">Camera from which frame is stored.</param>
-        /// <remarks>If the camera does not support Bitmap output, the frame from the active channel is fetched and converted to a bitmap.</remarks>
-        private static void StoreFrame(IMetriCamera camera)
+        private void StoreFrame(IMetriCamera camera)
         {
-            Bitmap bmp;
             if (camera is IProvidesBitmapOutput)
             {
-                Console.WriteLine("Bitmap output is available.");
-                bmp = ((IProvidesBitmapOutput)camera).GetBitmap();
+                writingToFile = true;
+                
+                List<Color> pixels = new List<Color>();
+                Bitmap bmp = ((IProvidesBitmapOutput)camera).GetBitmap();
+
+                bmp.Save("example.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+                for (int y = 0; y < 50; y++)
+                {
+                    for (int x = 0; x < 50; ++x)
+                    {
+                        Color color = bmp.GetPixel(x, y);
+                        WritePixelToFile(color, y, x);
+                    }
+                }
+                
             }
-            else
-            {
-                Console.WriteLine("Bitmap output is not available. Converting active channel.");
-                bmp = ConvertToBitmap(camera.GetActiveChannel());
-            }
-            bmp.Save("example.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
         }
 
-        /// <summary>
-        /// Converts a 2-D float array to a grayscale Bitmap. The color depth is reduced to 8 bit.
-        /// </summary>
-        /// <param name="frame">Channel data.</param>
-        /// <returns>Bitmap representation of the channel data.</returns>
-        private static unsafe Bitmap ConvertToBitmap(float[,] frame)
+        private void WritePixelToFile(Color _color, int _y, int _x)
         {
-            float maxVal = float.MinValue;
-            float minVal = float.MaxValue;
-            // Find minimal and maximal gray value.
-            for (int y = 0; y < frame.GetLength(0); y++)
+            byte[] rgb = new byte[3];
+            rgb[0] = _color.R;
+            rgb[1] = _color.G;
+            rgb[2] = _color.B;
+
+            string binaryR = Convert.ToString(rgb[0], 2);
+            string binaryG = Convert.ToString(rgb[1], 2);
+            string binaryB = Convert.ToString(rgb[2], 2);
+
+            waitHandle.WaitOne();
+            using (var writer = new StreamWriter("bmpmap.txt", append: true))
             {
-                for (int x = 0; x < frame.GetLength(1); x++)
-                {
-                    float val = frame[y, x];
-                    if (val > maxVal)
-                        maxVal = val;
-                    if (val < minVal)
-                        minVal = val;
-                }
+                writer.WriteLine("{0} {1} {2}", binaryR, binaryG, binaryB);
             }
-            Bitmap result = new Bitmap(frame.GetLength(1), frame.GetLength(0), System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            Rectangle rect = new Rectangle(0, 0, frame.GetLength(1), frame.GetLength(0));
-            System.Drawing.Imaging.BitmapData bitmapData = result.LockBits(rect, System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            // Scale the gray values to 8-bit range and store them in the bitmap memory.
-            byte* bmpPtr = (byte*)bitmapData.Scan0;
-            for (int y = 0; y < frame.GetLength(0); y++)
-            {
-                byte* linePtr = bmpPtr + bitmapData.Stride * y;
-                for (int x = 0; x < frame.GetLength(1); x++)
-                {
-                    byte value = (byte)(byte.MaxValue * (frame[y, x] - minVal) / (maxVal - minVal));
-                    *linePtr++ = value;
-                    *linePtr++ = value;
-                    *linePtr++ = value;
-                }
-            }
-            result.UnlockBits(bitmapData);
-            return result;
+            waitHandle.Set();
         }
     }
 }

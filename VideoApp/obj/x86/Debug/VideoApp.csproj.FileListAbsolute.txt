@@ -120,7 +120,6 @@ D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\bin\Debug\AForge.Video.Xim
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\bin\Debug\AForge.Vision.xml
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\bin\Debug\de\MetriCam.resources.dll
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\bin\Debug\en\MetriCam.resources.dll
-D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csprojResolveAssemblyReference.cache
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Form1.resources
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Properties.Resources.resources
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csproj.GenerateResource.Cache
