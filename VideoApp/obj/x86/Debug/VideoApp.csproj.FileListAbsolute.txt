@@ -123,3 +123,4 @@ D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\bin\Debug\en\MetriCam.reso
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Form1.resources
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Properties.Resources.resources
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csproj.GenerateResource.Cache
+D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csprojResolveAssemblyReference.cache
