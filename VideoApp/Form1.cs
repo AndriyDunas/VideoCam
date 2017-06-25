@@ -12,6 +12,8 @@ using System.Timers;
 using System.IO;
 using System.Threading;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace VideoApp
 {
@@ -70,7 +72,7 @@ namespace VideoApp
             List<Color> pixels = new List<Color>();
             Bitmap bmp = new Bitmap(50, 50);
 
-            using (var reader = new StreamReader("bmpmap.txt"))
+            using (var reader = new StreamReader("photo.txt"))
             {
                 string all = reader.ReadToEnd();
                 char[] separator = { '\r', '\n', ' ' };
@@ -114,7 +116,6 @@ namespace VideoApp
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             camera.Disconnect();
-            //button1.Text = "&Connect";
         }
 
         /// <summary>
@@ -130,9 +131,9 @@ namespace VideoApp
                 List<Color> pixels = new List<Color>();
                 Bitmap bmp = ((IProvidesBitmapOutput)camera).GetBitmap();
 
-                bmp.Save("example.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+                bmp.Save("photo.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
 
-                File.Create("bmpmap.txt").Close();
+                File.Create("photo.txt").Close();
                 for (int y = 0; y < 50; y++)
                 {
                     for (int x = 0; x < 50; ++x)
@@ -157,7 +158,7 @@ namespace VideoApp
             string binaryB = Convert.ToString(rgb[2], 2);
 
             waitHandle.WaitOne();
-            using (var writer = new StreamWriter("bmpmap.txt", append: true))
+            using (var writer = new StreamWriter("photo.txt", append: true))
             {
                 writer.WriteLine("{0} {1} {2}", binaryR, binaryG, binaryB);
             }
@@ -166,9 +167,12 @@ namespace VideoApp
 
         private void btnMakePhoto_Click(object sender, EventArgs e)
         {
-            Bitmap bmp = ((IProvidesBitmapOutput)camera).GetBitmap();
-            backgroundWorker1.CancelAsync();
-            pictureBoxCamera.Image = bmp;
+            if (camera.IsConnected())
+            {
+                Bitmap bmp = ((IProvidesBitmapOutput)camera).GetBitmap();
+                backgroundWorker1.CancelAsync();
+                pictureBoxCamera.Image = bmp;
+            }
         }
 
         private void btnConnectCamera_Click(object sender, EventArgs e)
@@ -176,7 +180,6 @@ namespace VideoApp
             if (!camera.IsConnected())
             {
                 camera.Connect();
-                //button1.Text = "&Disconnect";
                 backgroundWorker1.RunWorkerAsync();
             }
         }
@@ -190,7 +193,7 @@ namespace VideoApp
             backgroundWorker1.CancelAsync();
         }
 
-        public Image Resize(Image originalImage, int w, int h)
+        public Image ResizeCamera(Image originalImage, int w, int h)
         {
             //Original Image attributes
             int originalWidth = originalImage.Width;
@@ -218,12 +221,11 @@ namespace VideoApp
             graphic.DrawImage(originalImage, 0, 0, newWidth, newHeight);
 
             return thumbnail;
-
         }
 
         private void btnResize_Click(object sender, EventArgs e)
         {
-            Image resizedImage = Resize(pictureBoxCamera.Image, Convert.ToInt32(textWidth.Text), Convert.ToInt32(textHeight.Text));
+            Image resizedImage = ResizeCamera(pictureBoxCamera.Image, Convert.ToInt32(textWidth.Text), Convert.ToInt32(textHeight.Text));
             pictureBoxCamera.Image = resizedImage;
         }
 
@@ -268,11 +270,8 @@ namespace VideoApp
             graphic.SmoothingMode = SmoothingMode.HighQuality;
             graphic.PixelOffsetMode = PixelOffsetMode.HighQuality;
             graphic.CompositingQuality = CompositingQuality.HighQuality;
-
             graphic.Clear(Color.Transparent);
-
             graphic.DrawImage(image, 0.0f, 0.0f, sourceRect, System.Drawing.GraphicsUnit.Pixel);
-
             return thumbnail;
         }
 
@@ -280,12 +279,6 @@ namespace VideoApp
         {
             Image drawed = DrawSelection(pictureBoxCamera.Image, Rect);
             pictureBoxTest.Image = drawed;
-        }
-
-        private void btnScaleSelection_Click(object sender, EventArgs e)
-        {
-            Image original = pictureBoxTest.Image;
-            pictureBoxTest.Image = Resize(original, original.Width * Convert.ToInt32(txtScaleRatio.Text), original.Height * Convert.ToInt32(txtScaleRatio.Text));
         }
 
         private void TranslateAffine()
@@ -472,174 +465,585 @@ namespace VideoApp
             return (uintR + uintG + uintB) / 3;
         }
 
-        private void SimpleBinarize()
+        private void SegmentImageWithGlobalTreshold(Bitmap _image, int _treshold)
         {
-            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
-            for (int x = 0; x < 640; x++)
+            for (int x = 0; x < _image.Width; x++)
             {
-                for (int y = 0; y < 480; ++y)
+                for (int y = 0; y < _image.Height; ++y)
                 {
-                    int intensityOfPixel = GetIntensityOfPixel(default_image, x, y);
-                    int isBlack = intensityOfPixel >= 127 ? 0 : 1;
-                    if (isBlack == 1)
+                    int intensityOfPixel = GetIntensityOfPixel(_image, x, y);
+                    if (intensityOfPixel < _treshold)
                     {
-                        default_image.SetPixel(x, y, Color.Black);
+                        _image.SetPixel(x, y, Color.Black);
                     }
                     else
                     {
-                        default_image.SetPixel(x, y, Color.White);
+                        _image.SetPixel(x, y, Color.White);
                     }
                 }
             }
-            pictureBoxCamera.Image = default_image;
+        }
+
+        private void SimpleBinarize(Bitmap _image)
+        {
+            int treshold = Convert.ToInt32(textBoxSimpleBinTreshold.Text);
+            SegmentImageWithGlobalTreshold(_image, treshold);
+            pictureBoxCamera.Image = _image;
         }
 
         private void btnSimpleBinarize_Click(object sender, EventArgs e)
         {
-            SimpleBinarize();
+            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
+            SimpleBinarize(default_image);
+            pictureBoxCamera.Image = default_image;
         }
 
-        private void Niblack()
+        private void Niblack(Bitmap default_image, Bitmap new_image)
         {
-            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
+            int height = default_image.Height;
+            int width = default_image.Width;
 
-            int w = 480; // size of image
-            double k = 0.2; // or -0.2
-            int averageM = 0;
-            double averageBias = 0.0;
+            int w = Convert.ToInt32(textBoxNiblackStep.Text);
 
-            int[] intensities = new int[w * w];
-
-            for (int x = 0; x < 640; x++)
+            for (int x = 0; x < width; x++)
             {
-                for (int y = 0; y < w; ++y)
+                for (int y = 0; y < height; ++y)
                 {
-                    int intensity = GetIntensityOfPixel(default_image, x, y);
-                    averageM += intensity;
-                    averageBias += (intensity * intensity);
-                    intensities[x * w + y] = intensity;
+                    double averageM = 0;
+                    int totalWindowIntencity = 0;
+                    int numberOfProcessedPixels = 0;
+
+                    for (int i = x - w / 2; i < x + w / 2; i++)
+                    {
+                        for (int j = y - w / 2; j < y + w / 2; j++)
+                        {
+                            if (i < 0 || i >= width || j < 0 || j >= height)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                totalWindowIntencity += GetIntensityOfPixel(default_image, i, j);
+                                numberOfProcessedPixels++;
+                            }
+                        }
+                    }
+                    averageM = totalWindowIntencity / numberOfProcessedPixels;
+
+                    double sumOfWindow = 0;
+                    double averageS = 0;
+                    numberOfProcessedPixels = 0;
+
+                    for (int i = x - w / 2; i < x + w / 2; i++)
+                    {
+                        for (int j = y - w / 2; j < y + w / 2; j++)
+                        {
+                            if (i < 0 || i >= width || j < 0 || j >= height)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                double intencity = GetIntensityOfPixel(default_image, i, j);
+                                double pow = Math.Pow(intencity - averageM, 2.0);
+                                sumOfWindow += pow;
+                                numberOfProcessedPixels++;
+                            }
+                        }
+                    }
+                    averageS = Math.Sqrt(sumOfWindow / numberOfProcessedPixels);
+
+                    int localIntencity = GetIntensityOfPixel(default_image, x, y);
+                    double k = localIntencity <= 127 ? -0.2 : 0.2;
+                    double local_treshold = averageM + k * averageS;
+                    if (localIntencity <= local_treshold)
+                    {
+                        new_image.SetPixel(x, y, Color.Black);
+                    }
+                    else
+                    {
+                        new_image.SetPixel(x, y, Color.White);
+                    }
                 }
             }
-            averageM /= (640 * w);
-            averageBias = Math.Sqrt(averageBias / (w * w));
-
-            for (int i = 0; i < w * w; i++)
-            {
-                int intensity = intensities[i];
-                k = intensity >= 127 ? 0.2 : -0.2;
-                double local_treshold = averageM + (k * averageBias);
-                if (intensity <= local_treshold)
-                {
-                    default_image.SetPixel(i / w, i % w, Color.White);
-                }
-                else
-                {
-                    default_image.SetPixel(i / w, i % w, Color.Black);
-                }
-            }
-            pictureBoxCamera.Image = default_image;
         }
 
         private void btnNiblack_Click(object sender, EventArgs e)
         {
-            Niblack();
-        }
-
-        private byte MaxInByteArr(byte[] array, int size)
-        {
-            byte max = array[0];
-            for (int i = 1; i < size; i++)
-            {
-                max = Math.Max(max, array[i]);
-            }
-            return max;
-        }
-
-        private byte MinInByteArr(byte[] array, int size)
-        {
-            byte min = array[0];
-            for (int i = 1; i < size; i++)
-            {
-                min = Math.Min(min, array[i]);
-            }
-            return min;
-        }
-
-        private void Bernsen()
-        {
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
-
-            for (int x = 0; x < 640; x++)
-            {
-                for (int y = 0; y < 480; ++y)
-                {
-                    Color color = default_image.GetPixel(x, y);
-
-                    byte[] rgb = new byte[3];
-                    rgb[0] = color.R;
-                    rgb[1] = color.G;
-                    rgb[2] = color.B;
-
-                    byte maxIntensity = MaxInByteArr(rgb, 3);
-                    byte minIntensity = MinInByteArr(rgb, 3);
-                    int average = (Convert.ToInt32(maxIntensity) + Convert.ToInt32(minIntensity)) / 2;
-
-                    int isBlack = average <= 127 ? 1 : 0;
-                    if (isBlack == 1)
-                    {
-                        default_image.SetPixel(x, y, Color.Black);
-                    }
-                    else
-                    {
-                        default_image.SetPixel(x, y, Color.White);
-                    }
-                }
-            }
-            pictureBoxCamera.Image = default_image;
+            Bitmap new_image = new Bitmap(default_image);
+            Niblack(default_image, new_image);
+            pictureBoxCamera.Image = new_image;
         }
 
-        private void btnBernsen_Click(object sender, EventArgs e)
+        private int OtsuTreshold(int [] data) 
         {
-            Bernsen();
-        }
+            // Otsu's threshold algorithm
+            // C++ code by Jordan Bevik <Jordan.Bevic@qtiworld.com>
+            // ported to ImageJ plugin by G.Landini
+            int k, treshold;  // k = the current threshold; kStar = optimal threshold
+            double N1, N;    // N1 = # points with intensity <=k; N = total number of points
+            double BCV, BCVmax; // The current Between Class Variance and maximum BCV
+            double num, denom;  // temporary bookeeping
+            double Sk;  // The total intensity for all histogram points <=k
+            double S, L=256; // The total intensity of the image
 
-        private void Average()
-        {
-            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
-
-            int totalIntensity = 0;
-            int[] intensities = new int[640 * 480];
-
-            for (int x = 0; x < 640; x++)
-            {
-                for (int y = 0; y < 480; ++y)
-                {
-                    int intensity = GetIntensityOfPixel(default_image, x, y);
-                    totalIntensity += intensity;
-                    intensities[x * 480 + y] = intensity;
-                }
+            // Initialize values:
+            S = N = 0;
+            for (k=0; k<L; k++){
+                S += (double)k * data[k];   // Total histogram intensity
+                N += data[k];       // Total number of data points
             }
-            int treshold = totalIntensity / (640 * 480);
 
-            for (int i = 0; i < 640 * 480; i++)
-            {
-                if (intensities[i] <= treshold)
-                {
-                    default_image.SetPixel(i / 480, i % 480, Color.Black);
+            Sk = 0;
+            N1 = data[0]; // The entry for zero intensity
+            BCV = 0;
+            BCVmax=0;
+            treshold = 0;
+
+            // Look at each possible threshold value,
+            // calculate the between-class variance, and decide if it's a max
+            for (k=1; k<L-1; k++) { // No need to check endpoints k = 0 or k = L-1
+                Sk += (double)k * data[k];
+                N1 += data[k];
+
+                // The float casting here is to avoid compiler warning about loss of precision and
+                // will prevent overflow in the case of large saturated images
+                denom = (double)( N1) * (N - N1); // Maximum value of denom is (N^2)/4 =  approx. 3E10
+
+                if (denom != 0 ){
+                    // Float here is to avoid loss of precision when dividing
+                    num = ( (double)N1 / N ) * S - Sk;  // Maximum value of num =  255*N = approx 8E7
+                    BCV = (num * num) / denom;
                 }
                 else
-                {
-                    default_image.SetPixel(i / 480, i % 480, Color.White);
+                    BCV = 0;
+
+                if (BCV >= BCVmax){ // Assign the best threshold found so far
+                    BCVmax = BCV;
+                    treshold = k;
                 }
             }
+            // kStar += 1;  // Use QTI convention that intensity -> 1 if intensity >= k
+            // (the algorithm was developed for I-> 1 if I <= k.)
+            return treshold;
+        }
 
+        private void Otsu(Bitmap default_image)
+        {
+            int[] hist = GetImageHistogram(default_image);
+            int treshold = OtsuTreshold(hist);
+            SegmentImageWithGlobalTreshold(default_image, treshold);
+        }
+
+        private void btnOtsu_Click(object sender, EventArgs e)
+        {
+            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
+            Otsu(default_image);
             pictureBoxCamera.Image = default_image;
         }
 
-        private void btnAverage_Click(object sender, EventArgs e)
+        private Bitmap GrayScale()
         {
-            Average();
+            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
+            //create a blank bitmap the same size as original
+            Bitmap newBitmap = new Bitmap(default_image.Width, default_image.Height);
+
+            //get a graphics object from the new image
+            Graphics g = Graphics.FromImage(newBitmap);
+
+            //create the grayscale ColorMatrix
+            ColorMatrix colorMatrix = new ColorMatrix(
+            new float[][] 
+            {
+                new float[] {.3f, .3f, .3f, 0, 0},
+                new float[] {.59f, .59f, .59f, 0, 0},
+                new float[] {.11f, .11f, .11f, 0, 0},
+                new float[] {0, 0, 0, 1, 0},
+                new float[] {0, 0, 0, 0, 1}
+            });
+
+            //create some image attributes
+            ImageAttributes attributes = new ImageAttributes();
+
+            //set the color matrix attribute
+            attributes.SetColorMatrix(colorMatrix);
+
+            //draw the original image on the new image
+            //using the grayscale color matrix
+            g.DrawImage(default_image, new Rectangle(0, 0, default_image.Width, default_image.Height),
+               0, 0, default_image.Width, default_image.Height, GraphicsUnit.Pixel, attributes);
+
+            //dispose the Graphics object
+            g.Dispose();
+            pictureBoxCamera.Image = newBitmap;
+            return newBitmap;
         }
 
+        private void btnGraysclae_Click(object sender, EventArgs e)
+        {
+            GrayScale();
+        }
+
+        private int[] GetImageHistogram(Bitmap _image)
+        {
+            int width = _image.Width;
+            int height = _image.Height;
+            int histSize = 256;
+            int[] hist = new int[histSize];
+
+            for (int i = 0; i < histSize; i++)
+            {
+                hist[i] = 0;
+            }
+
+            /* Считаем сколько каких полутонов */
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    hist[GetIntensityOfPixel(_image, x, y)]++;
+                }
+            }
+            return hist;
+        }
+
+        private void Yen(Bitmap default_image)
+        {
+            int[] hist = GetImageHistogram(default_image);
+            int treshold = YenTreshold(hist);
+            SegmentImageWithGlobalTreshold(default_image, treshold);
+        }
+
+        private int YenTreshold(int[] data)
+        {
+            // Implements Yen  thresholding method
+            // 1) Yen J.C., Chang F.J., and Chang S. (1995) "A New Criterion 
+            //    for Automatic Multilevel Thresholding" IEEE Trans. on Image 
+            //    Processing, 4(3): 370-378
+            // 2) Sezgin M. and Sankur B. (2004) "Survey over Image Thresholding 
+            //    Techniques and Quantitative Performance Evaluation" Journal of 
+            //    Electronic Imaging, 13(1): 146-165
+            //    http://citeseer.ist.psu.edu/sezgin04survey.html
+            //
+            // M. Emre Celebi
+            // 06.15.2007
+            // Ported to ImageJ plugin by G.Landini from E Celebi's fourier_0.8 routines
+            int threshold;
+            int ih, it;
+            double crit;
+            double max_crit;
+            double[] norm_histo = new double[256]; /* normalized histogram */
+            double[] P1 = new double[256]; /* cumulative normalized histogram */
+            double[] P1_sq = new double[256];
+            double[] P2_sq = new double[256];
+
+            double total = 0;
+            for (ih = 0; ih < 256; ih++)
+                total += data[ih];
+
+            for (ih = 0; ih < 256; ih++)
+                norm_histo[ih] = data[ih] / total;
+
+            P1[0] = norm_histo[0];
+            for (ih = 1; ih < 256; ih++)
+                P1[ih] = P1[ih - 1] + norm_histo[ih];
+
+            P1_sq[0] = norm_histo[0] * norm_histo[0];
+            for (ih = 1; ih < 256; ih++)
+                P1_sq[ih] = P1_sq[ih - 1] + norm_histo[ih] * norm_histo[ih];
+
+            P2_sq[255] = 0.0;
+            for (ih = 254; ih >= 0; ih--)
+                P2_sq[ih] = P2_sq[ih + 1] + norm_histo[ih + 1] * norm_histo[ih + 1];
+
+            /* Find the threshold that maximizes the criterion */
+            threshold = -1;
+            max_crit = Double.MinValue;
+            for (it = 0; it < 256; it++)
+            {
+                                                                                                     // NOTE: in original algorithm used value -1 instead 2
+                crit = -1.0 * ((P1_sq[it] * P2_sq[it]) > 0.0 ? Math.Log(P1_sq[it] * P2_sq[it]) : 0.0) + 2 * ((P1[it] * (1.0 - P1[it])) > 0.0 ? Math.Log(P1[it] * (1.0 - P1[it])) : 0.0);
+                if (crit > max_crit)
+                {
+                    max_crit = crit;
+                    threshold = it;
+                }
+            }
+            return threshold;
+        }
+
+        private void btnYen_Click(object sender, EventArgs e)
+        {
+            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
+            Yen(default_image);
+            pictureBoxCamera.Image = default_image;
+        }
+
+        int TriangleTreshold(int[] data, int length)
+        {
+            //  Zack, G. W., Rogers, W. E. and Latt, S. A., 1977,
+            //  Automatic Measurement of Sister Chromatid Exchange Frequency,
+            // Journal of Histochemistry and Cytochemistry 25 (7), pp. 741-753
+            //
+            //  modified from Johannes Schindelin plugin
+            // 
+            // find min and max
+            int min = 0, dmax = 0, max = 0, min2 = 0;
+            for (int i = 0; i < length; i++)
+            {
+                if (data[i] > 0)
+                {
+                    min = i;
+                    break;
+                }
+            }
+            if (min > 0) min--; // line to the (p==0) point, not to data[min]
+
+            // The Triangle algorithm cannot tell whether the data is skewed to one side or another.
+            // This causes a problem as there are 2 possible thresholds between the max and the 2 extremes
+            // of the histogram.
+            // Here I propose to find out to which side of the max point the data is furthest, and use that as
+            //  the other extreme.
+            for (int i = 255; i > 0; i--)
+            {
+                if (data[i] > 0)
+                {
+                    min2 = i;
+                    break;
+                }
+            }
+            if (min2 < 255) min2++; // line to the (p==0) point, not to data[min]
+
+            for (int i = 0; i < 256; i++)
+            {
+                if (data[i] > dmax)
+                {
+                    max = i;
+                    dmax = data[i];
+                }
+            }
+            // find which is the furthest side
+            //IJ.log(""+min+" "+max+" "+min2);
+            bool inverted = false;
+            if ((max - min) < (min2 - max))
+            {
+                // reverse the histogram
+                //IJ.log("Reversing histogram.");
+                inverted = true;
+                int left = 0;          // index of leftmost element
+                int right = 255; // index of rightmost element
+                while (left < right)
+                {
+                    // exchange the left and right elements
+                    int temp = data[left];
+                    data[left] = data[right];
+                    data[right] = temp;
+                    // move the bounds toward the center
+                    left++;
+                    right--;
+                }
+                min = 255 - min2;
+                max = 255 - max;
+            }
+
+            if (min == max)
+            {
+                //IJ.log("Triangle:  min == max.");
+                return min;
+            }
+
+            // describe line by nx * x + ny * y - d = 0
+            double nx, ny, d;
+            // nx is just the max frequency as the other point has freq=0
+            nx = data[max];   //-min; // data[min]; //  lowest value bmin = (p=0)% in the image
+            ny = min - max;
+            d = Math.Sqrt(nx * nx + ny * ny);
+            nx /= d;
+            ny /= d;
+            d = nx * min + ny * data[min];
+
+            // find split point
+            int split = min;
+            double splitDistance = 0;
+            for (int i = min + 1; i <= max; i++)
+            {
+                double newDistance = nx * i + ny * data[i] - d;
+                if (newDistance > splitDistance)
+                {
+                    split = i;
+                    splitDistance = newDistance;
+                }
+            }
+            split--;
+
+            if (inverted)
+            {
+                // The histogram might be used for something else, so let's reverse it back
+                int left = 0;
+                int right = 255;
+                while (left < right)
+                {
+                    int temp = data[left];
+                    data[left] = data[right];
+                    data[right] = temp;
+                    left++;
+                    right--;
+                }
+                return (255 - split);
+            }
+            else
+                return split;
+        }
+
+        private void Triangle(Bitmap default_image)
+        {
+            int[] hist = GetImageHistogram(default_image);
+            int treshold = TriangleTreshold(hist, hist.GetLength(0));
+            SegmentImageWithGlobalTreshold(default_image, treshold);
+            pictureBoxCamera.Image = default_image;
+        }
+
+        private void btnTriangle_Click(object sender, EventArgs e)
+        {
+            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
+            Triangle(default_image);
+            
+        }
+
+        private void btnToDefaultImage_Click(object sender, EventArgs e)
+        {
+            if (camera.IsConnected())
+            {
+                backgroundWorker1.CancelAsync();
+            }
+            pictureBoxCamera.Image = VideoApp.Properties.Resources.digits;
+        }
+
+        public Bitmap MedianFilter(Bitmap sourceBitmap, int matrixSize, int bias = 0, bool grayscale = false)
+        {
+            BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
+            byte[] resultBuffer = new byte[sourceData.Stride * sourceData.Height];
+
+            Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
+            sourceBitmap.UnlockBits(sourceData);
+
+            if (grayscale == true)
+            {
+                float rgb = 0;
+                for (int k = 0; k < pixelBuffer.Length; k += 4)
+                {
+                    rgb = pixelBuffer[k] * 0.11f;
+                    rgb += pixelBuffer[k + 1] * 0.59f;
+                    rgb += pixelBuffer[k + 2] * 0.3f;
+
+                    pixelBuffer[k] = (byte)rgb;
+                    pixelBuffer[k + 1] = pixelBuffer[k];
+                    pixelBuffer[k + 2] = pixelBuffer[k];
+                    pixelBuffer[k + 3] = 255;
+                }
+            }
+
+            int filterOffset = (matrixSize - 1) / 2;
+            int calcOffset = 0;
+            int byteOffset = 0;
+
+            List<int> neighbourPixels = new List<int>();
+            byte[] middlePixel;
+            for (int offsetY = filterOffset; offsetY < sourceBitmap.Height - filterOffset; offsetY++)
+            {
+                for (int offsetX = filterOffset; offsetX < sourceBitmap.Width - filterOffset; offsetX++)
+                {
+                    byteOffset = offsetY * sourceData.Stride + offsetX * 4;
+                    neighbourPixels.Clear();
+
+                    for (int filterY = -filterOffset; filterY <= filterOffset; filterY++)
+                    {
+                        for (int filterX = -filterOffset; filterX <= filterOffset; filterX++)
+                        {
+                            calcOffset = byteOffset + (filterX * 4) + (filterY * sourceData.Stride);
+                            neighbourPixels.Add(BitConverter.ToInt32(pixelBuffer, calcOffset));
+                        }
+                    }
+                    neighbourPixels.Sort();
+                    middlePixel = BitConverter.GetBytes(neighbourPixels[filterOffset]);
+
+                    resultBuffer[byteOffset] = middlePixel[0];
+                    resultBuffer[byteOffset + 1] = middlePixel[1];
+                    resultBuffer[byteOffset + 2] = middlePixel[2];
+                    resultBuffer[byteOffset + 3] = middlePixel[3];
+                }
+            }
+
+            Bitmap resultBitmap = new Bitmap(sourceBitmap.Width, sourceBitmap.Height);
+            BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0, resultBitmap.Width, resultBitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            Marshal.Copy(resultBuffer, 0, resultData.Scan0, resultBuffer.Length);
+            resultBitmap.UnlockBits(resultData);
+
+            return resultBitmap;
+        }
+
+        private void btnMedianFilter_Click(object sender, EventArgs e)
+        {
+            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
+            int medianFilterStep = Convert.ToInt32(textBoxMedianFilterStep.Text);
+            Bitmap result_image = MedianFilter(default_image, medianFilterStep);
+            pictureBoxCamera.Image = result_image;
+        }
+
+        private void NPixelsFilter(Bitmap default_image, Bitmap new_image)
+        {
+            int height = default_image.Height;
+            int width = default_image.Width;
+
+            int w = 2;
+            bool brushWhite = false;
+
+            for (int x = w / 2; x < width; x += w)
+            {
+                for (int y = w / 2; y < height; y += w)
+                {
+                    for (int i = x - w / 2; i < x + w / 2; i++)
+                    {
+                        for (int j = y - w / 2; j < y + w / 2; j++)
+                        {
+                            if (GetIntensityOfPixel(default_image, i, j) > 127)
+                            {
+                                brushWhite = true;
+                                break;
+                            }
+                        }
+                        if (brushWhite)
+                        {
+                            break;
+                        }
+                    }
+                    if (brushWhite)
+                    {
+                        for (int i = x - w / 2; i < x + w / 2; i++)
+                        {
+                            for (int j = y - w / 2; j < y + w / 2; j++)
+                            {
+                                if (i < width && j < height)
+                                    new_image.SetPixel(i, j, Color.White);
+                            }
+                        }
+                        brushWhite = false;
+                        continue;
+                    }
+                }
+            }
+        }
+
+        private void btnNPixelsFilter_Click(object sender, EventArgs e)
+        {
+            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
+            Bitmap new_image = default_image;
+            NPixelsFilter(default_image, new_image);
+            pictureBoxCamera.Image = new_image;
+        }
     }
 }

@@ -40,9 +40,6 @@
             this.textWidth = new System.Windows.Forms.TextBox();
             this.textHeight = new System.Windows.Forms.TextBox();
             this.pictureBoxTest = new System.Windows.Forms.PictureBox();
-            this.btnScaleSelection = new System.Windows.Forms.Button();
-            this.lblScaleRatio = new System.Windows.Forms.Label();
-            this.txtScaleRatio = new System.Windows.Forms.TextBox();
             this.btnAffineTranslate = new System.Windows.Forms.Button();
             this.lblTranslateX = new System.Windows.Forms.Label();
             this.txtTranslateX = new System.Windows.Forms.TextBox();
@@ -56,14 +53,30 @@
             this.lblScaleY = new System.Windows.Forms.Label();
             this.btnSimpleBinarize = new System.Windows.Forms.Button();
             this.btnNiblack = new System.Windows.Forms.Button();
-            this.btnBernsen = new System.Windows.Forms.Button();
-            this.btnAverage = new System.Windows.Forms.Button();
+            this.btnOtsu = new System.Windows.Forms.Button();
+            this.btnGraysclae = new System.Windows.Forms.Button();
+            this.btnYen = new System.Windows.Forms.Button();
+            this.btnTriangle = new System.Windows.Forms.Button();
+            this.btnToDefaultImage = new System.Windows.Forms.Button();
+            this.panelUnused = new System.Windows.Forms.Panel();
+            this.lblSimpleBinarizeTreshold = new System.Windows.Forms.Label();
+            this.textBoxSimpleBinTreshold = new System.Windows.Forms.TextBox();
+            this.lblNiblackStep = new System.Windows.Forms.Label();
+            this.textBoxNiblackStep = new System.Windows.Forms.TextBox();
+            this.btnMedianFilter = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.textBoxMedianFilterStep = new System.Windows.Forms.TextBox();
+            this.lblStep = new System.Windows.Forms.Label();
+            this.btnNPixelsFilter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCamera)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTest)).BeginInit();
+            this.panelUnused.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBoxCamera
             // 
+            this.pictureBoxCamera.Image = global::VideoApp.Properties.Resources.digits;
             this.pictureBoxCamera.Location = new System.Drawing.Point(12, 12);
             this.pictureBoxCamera.Name = "pictureBoxCamera";
             this.pictureBoxCamera.Size = new System.Drawing.Size(640, 480);
@@ -76,7 +89,7 @@
             // 
             // btnGetFromTxt
             // 
-            this.btnGetFromTxt.Location = new System.Drawing.Point(578, 540);
+            this.btnGetFromTxt.Location = new System.Drawing.Point(94, 48);
             this.btnGetFromTxt.Name = "btnGetFromTxt";
             this.btnGetFromTxt.Size = new System.Drawing.Size(75, 35);
             this.btnGetFromTxt.TabIndex = 1;
@@ -94,7 +107,7 @@
             // 
             this.btnMakePhoto.Location = new System.Drawing.Point(12, 530);
             this.btnMakePhoto.Name = "btnMakePhoto";
-            this.btnMakePhoto.Size = new System.Drawing.Size(75, 34);
+            this.btnMakePhoto.Size = new System.Drawing.Size(99, 34);
             this.btnMakePhoto.TabIndex = 2;
             this.btnMakePhoto.Text = "Make photo";
             this.btnMakePhoto.UseVisualStyleBackColor = true;
@@ -104,7 +117,7 @@
             // 
             this.btnConnectCamera.Location = new System.Drawing.Point(12, 495);
             this.btnConnectCamera.Name = "btnConnectCamera";
-            this.btnConnectCamera.Size = new System.Drawing.Size(75, 34);
+            this.btnConnectCamera.Size = new System.Drawing.Size(99, 34);
             this.btnConnectCamera.TabIndex = 3;
             this.btnConnectCamera.Text = "Connect camera";
             this.btnConnectCamera.UseVisualStyleBackColor = true;
@@ -112,7 +125,7 @@
             // 
             // btnSaveToTxt
             // 
-            this.btnSaveToTxt.Location = new System.Drawing.Point(578, 498);
+            this.btnSaveToTxt.Location = new System.Drawing.Point(94, 8);
             this.btnSaveToTxt.Name = "btnSaveToTxt";
             this.btnSaveToTxt.Size = new System.Drawing.Size(74, 36);
             this.btnSaveToTxt.TabIndex = 4;
@@ -122,18 +135,18 @@
             // 
             // btnResize
             // 
-            this.btnResize.Location = new System.Drawing.Point(509, 498);
+            this.btnResize.Location = new System.Drawing.Point(6, 8);
             this.btnResize.Name = "btnResize";
-            this.btnResize.Size = new System.Drawing.Size(66, 33);
+            this.btnResize.Size = new System.Drawing.Size(82, 33);
             this.btnResize.TabIndex = 5;
-            this.btnResize.Text = "Resize";
+            this.btnResize.Text = "Resize image";
             this.btnResize.UseVisualStyleBackColor = true;
             this.btnResize.Click += new System.EventHandler(this.btnResize_Click);
             // 
             // labelWidth
             // 
             this.labelWidth.AutoSize = true;
-            this.labelWidth.Location = new System.Drawing.Point(506, 535);
+            this.labelWidth.Location = new System.Drawing.Point(3, 45);
             this.labelWidth.Name = "labelWidth";
             this.labelWidth.Size = new System.Drawing.Size(60, 13);
             this.labelWidth.TabIndex = 6;
@@ -142,7 +155,7 @@
             // labelHeight
             // 
             this.labelHeight.AutoSize = true;
-            this.labelHeight.Location = new System.Drawing.Point(506, 576);
+            this.labelHeight.Location = new System.Drawing.Point(3, 86);
             this.labelHeight.Name = "labelHeight";
             this.labelHeight.Size = new System.Drawing.Size(64, 13);
             this.labelHeight.TabIndex = 7;
@@ -150,7 +163,7 @@
             // 
             // textWidth
             // 
-            this.textWidth.Location = new System.Drawing.Point(509, 553);
+            this.textWidth.Location = new System.Drawing.Point(6, 63);
             this.textWidth.Name = "textWidth";
             this.textWidth.Size = new System.Drawing.Size(57, 20);
             this.textWidth.TabIndex = 8;
@@ -158,7 +171,7 @@
             // 
             // textHeight
             // 
-            this.textHeight.Location = new System.Drawing.Point(509, 593);
+            this.textHeight.Location = new System.Drawing.Point(6, 103);
             this.textHeight.Name = "textHeight";
             this.textHeight.Size = new System.Drawing.Size(57, 20);
             this.textHeight.TabIndex = 9;
@@ -168,41 +181,15 @@
             // 
             this.pictureBoxTest.Location = new System.Drawing.Point(668, 12);
             this.pictureBoxTest.Name = "pictureBoxTest";
-            this.pictureBoxTest.Size = new System.Drawing.Size(332, 480);
+            this.pictureBoxTest.Size = new System.Drawing.Size(399, 480);
             this.pictureBoxTest.TabIndex = 10;
             this.pictureBoxTest.TabStop = false;
             // 
-            // btnScaleSelection
-            // 
-            this.btnScaleSelection.Location = new System.Drawing.Point(925, 498);
-            this.btnScaleSelection.Name = "btnScaleSelection";
-            this.btnScaleSelection.Size = new System.Drawing.Size(75, 29);
-            this.btnScaleSelection.TabIndex = 11;
-            this.btnScaleSelection.Text = "Scale";
-            this.btnScaleSelection.UseVisualStyleBackColor = true;
-            this.btnScaleSelection.Click += new System.EventHandler(this.btnScaleSelection_Click);
-            // 
-            // lblScaleRatio
-            // 
-            this.lblScaleRatio.AutoSize = true;
-            this.lblScaleRatio.Location = new System.Drawing.Point(922, 530);
-            this.lblScaleRatio.Name = "lblScaleRatio";
-            this.lblScaleRatio.Size = new System.Drawing.Size(60, 13);
-            this.lblScaleRatio.TabIndex = 12;
-            this.lblScaleRatio.Text = "Scale ratio:";
-            // 
-            // txtScaleRatio
-            // 
-            this.txtScaleRatio.Location = new System.Drawing.Point(925, 547);
-            this.txtScaleRatio.Name = "txtScaleRatio";
-            this.txtScaleRatio.Size = new System.Drawing.Size(75, 20);
-            this.txtScaleRatio.TabIndex = 13;
-            // 
             // btnAffineTranslate
             // 
-            this.btnAffineTranslate.Location = new System.Drawing.Point(417, 498);
+            this.btnAffineTranslate.Location = new System.Drawing.Point(568, 499);
             this.btnAffineTranslate.Name = "btnAffineTranslate";
-            this.btnAffineTranslate.Size = new System.Drawing.Size(86, 33);
+            this.btnAffineTranslate.Size = new System.Drawing.Size(86, 32);
             this.btnAffineTranslate.TabIndex = 14;
             this.btnAffineTranslate.Text = "Affine translate";
             this.btnAffineTranslate.UseVisualStyleBackColor = true;
@@ -211,7 +198,7 @@
             // lblTranslateX
             // 
             this.lblTranslateX.AutoSize = true;
-            this.lblTranslateX.Location = new System.Drawing.Point(417, 534);
+            this.lblTranslateX.Location = new System.Drawing.Point(564, 534);
             this.lblTranslateX.Name = "lblTranslateX";
             this.lblTranslateX.Size = new System.Drawing.Size(61, 13);
             this.lblTranslateX.TabIndex = 15;
@@ -219,7 +206,7 @@
             // 
             // txtTranslateX
             // 
-            this.txtTranslateX.Location = new System.Drawing.Point(420, 553);
+            this.txtTranslateX.Location = new System.Drawing.Point(567, 553);
             this.txtTranslateX.Name = "txtTranslateX";
             this.txtTranslateX.Size = new System.Drawing.Size(83, 20);
             this.txtTranslateX.TabIndex = 16;
@@ -227,7 +214,7 @@
             // 
             // txtTranslateY
             // 
-            this.txtTranslateY.Location = new System.Drawing.Point(420, 593);
+            this.txtTranslateY.Location = new System.Drawing.Point(567, 593);
             this.txtTranslateY.Name = "txtTranslateY";
             this.txtTranslateY.Size = new System.Drawing.Size(83, 20);
             this.txtTranslateY.TabIndex = 18;
@@ -236,7 +223,7 @@
             // lblTranslateY
             // 
             this.lblTranslateY.AutoSize = true;
-            this.lblTranslateY.Location = new System.Drawing.Point(418, 575);
+            this.lblTranslateY.Location = new System.Drawing.Point(565, 575);
             this.lblTranslateY.Name = "lblTranslateY";
             this.lblTranslateY.Size = new System.Drawing.Size(61, 13);
             this.lblTranslateY.TabIndex = 17;
@@ -244,7 +231,7 @@
             // 
             // btnAffineRotate
             // 
-            this.btnAffineRotate.Location = new System.Drawing.Point(336, 498);
+            this.btnAffineRotate.Location = new System.Drawing.Point(177, 8);
             this.btnAffineRotate.Name = "btnAffineRotate";
             this.btnAffineRotate.Size = new System.Drawing.Size(75, 33);
             this.btnAffineRotate.TabIndex = 19;
@@ -254,7 +241,7 @@
             // 
             // btnAffineScale
             // 
-            this.btnAffineScale.Location = new System.Drawing.Point(255, 499);
+            this.btnAffineScale.Location = new System.Drawing.Point(486, 499);
             this.btnAffineScale.Name = "btnAffineScale";
             this.btnAffineScale.Size = new System.Drawing.Size(75, 32);
             this.btnAffineScale.TabIndex = 20;
@@ -265,7 +252,7 @@
             // lblScaleX
             // 
             this.lblScaleX.AutoSize = true;
-            this.lblScaleX.Location = new System.Drawing.Point(255, 534);
+            this.lblScaleX.Location = new System.Drawing.Point(486, 534);
             this.lblScaleX.Name = "lblScaleX";
             this.lblScaleX.Size = new System.Drawing.Size(44, 13);
             this.lblScaleX.TabIndex = 21;
@@ -273,7 +260,7 @@
             // 
             // txtScaleX
             // 
-            this.txtScaleX.Location = new System.Drawing.Point(258, 551);
+            this.txtScaleX.Location = new System.Drawing.Point(489, 551);
             this.txtScaleX.Name = "txtScaleX";
             this.txtScaleX.Size = new System.Drawing.Size(72, 20);
             this.txtScaleX.TabIndex = 22;
@@ -281,7 +268,7 @@
             // 
             // txtScaleY
             // 
-            this.txtScaleY.Location = new System.Drawing.Point(258, 593);
+            this.txtScaleY.Location = new System.Drawing.Point(489, 593);
             this.txtScaleY.Name = "txtScaleY";
             this.txtScaleY.Size = new System.Drawing.Size(72, 20);
             this.txtScaleY.TabIndex = 24;
@@ -290,15 +277,15 @@
             // lblScaleY
             // 
             this.lblScaleY.AutoSize = true;
-            this.lblScaleY.Location = new System.Drawing.Point(255, 576);
+            this.lblScaleY.Location = new System.Drawing.Point(486, 576);
             this.lblScaleY.Name = "lblScaleY";
             this.lblScaleY.Size = new System.Drawing.Size(44, 13);
             this.lblScaleY.TabIndex = 23;
-            this.lblScaleY.Text = "Scale X";
+            this.lblScaleY.Text = "Scale Y";
             // 
             // btnSimpleBinarize
             // 
-            this.btnSimpleBinarize.Location = new System.Drawing.Point(841, 499);
+            this.btnSimpleBinarize.Location = new System.Drawing.Point(133, 498);
             this.btnSimpleBinarize.Name = "btnSimpleBinarize";
             this.btnSimpleBinarize.Size = new System.Drawing.Size(75, 25);
             this.btnSimpleBinarize.TabIndex = 25;
@@ -308,7 +295,7 @@
             // 
             // btnNiblack
             // 
-            this.btnNiblack.Location = new System.Drawing.Point(841, 526);
+            this.btnNiblack.Location = new System.Drawing.Point(214, 499);
             this.btnNiblack.Name = "btnNiblack";
             this.btnNiblack.Size = new System.Drawing.Size(75, 22);
             this.btnNiblack.TabIndex = 26;
@@ -316,33 +303,170 @@
             this.btnNiblack.UseVisualStyleBackColor = true;
             this.btnNiblack.Click += new System.EventHandler(this.btnNiblack_Click);
             // 
-            // btnBernsen
+            // btnOtsu
             // 
-            this.btnBernsen.Location = new System.Drawing.Point(841, 551);
-            this.btnBernsen.Name = "btnBernsen";
-            this.btnBernsen.Size = new System.Drawing.Size(75, 23);
-            this.btnBernsen.TabIndex = 27;
-            this.btnBernsen.Text = "Bernsen";
-            this.btnBernsen.UseVisualStyleBackColor = true;
-            this.btnBernsen.Click += new System.EventHandler(this.btnBernsen_Click);
+            this.btnOtsu.Location = new System.Drawing.Point(295, 499);
+            this.btnOtsu.Name = "btnOtsu";
+            this.btnOtsu.Size = new System.Drawing.Size(75, 23);
+            this.btnOtsu.TabIndex = 29;
+            this.btnOtsu.Text = "Otsu";
+            this.btnOtsu.UseVisualStyleBackColor = true;
+            this.btnOtsu.Click += new System.EventHandler(this.btnOtsu_Click);
             // 
-            // btnAverage
+            // btnGraysclae
             // 
-            this.btnAverage.Location = new System.Drawing.Point(841, 576);
-            this.btnAverage.Name = "btnAverage";
-            this.btnAverage.Size = new System.Drawing.Size(75, 23);
-            this.btnAverage.TabIndex = 28;
-            this.btnAverage.Text = "Average";
-            this.btnAverage.UseVisualStyleBackColor = true;
-            this.btnAverage.Click += new System.EventHandler(this.btnAverage_Click);
+            this.btnGraysclae.Location = new System.Drawing.Point(396, 498);
+            this.btnGraysclae.Name = "btnGraysclae";
+            this.btnGraysclae.Size = new System.Drawing.Size(84, 33);
+            this.btnGraysclae.TabIndex = 30;
+            this.btnGraysclae.Text = "Grayscale";
+            this.btnGraysclae.UseVisualStyleBackColor = true;
+            this.btnGraysclae.Click += new System.EventHandler(this.btnGraysclae_Click);
+            // 
+            // btnYen
+            // 
+            this.btnYen.Location = new System.Drawing.Point(295, 523);
+            this.btnYen.Name = "btnYen";
+            this.btnYen.Size = new System.Drawing.Size(75, 23);
+            this.btnYen.TabIndex = 31;
+            this.btnYen.Text = "Yen";
+            this.btnYen.UseVisualStyleBackColor = true;
+            this.btnYen.Click += new System.EventHandler(this.btnYen_Click);
+            // 
+            // btnTriangle
+            // 
+            this.btnTriangle.Location = new System.Drawing.Point(295, 549);
+            this.btnTriangle.Name = "btnTriangle";
+            this.btnTriangle.Size = new System.Drawing.Size(75, 23);
+            this.btnTriangle.TabIndex = 33;
+            this.btnTriangle.Text = "Triangle";
+            this.btnTriangle.UseVisualStyleBackColor = true;
+            this.btnTriangle.Click += new System.EventHandler(this.btnTriangle_Click);
+            // 
+            // btnToDefaultImage
+            // 
+            this.btnToDefaultImage.Location = new System.Drawing.Point(12, 565);
+            this.btnToDefaultImage.Name = "btnToDefaultImage";
+            this.btnToDefaultImage.Size = new System.Drawing.Size(99, 33);
+            this.btnToDefaultImage.TabIndex = 34;
+            this.btnToDefaultImage.Text = "Set default image";
+            this.btnToDefaultImage.UseVisualStyleBackColor = true;
+            this.btnToDefaultImage.Click += new System.EventHandler(this.btnToDefaultImage_Click);
+            // 
+            // panelUnused
+            // 
+            this.panelUnused.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelUnused.Controls.Add(this.btnResize);
+            this.panelUnused.Controls.Add(this.btnGetFromTxt);
+            this.panelUnused.Controls.Add(this.btnSaveToTxt);
+            this.panelUnused.Controls.Add(this.labelWidth);
+            this.panelUnused.Controls.Add(this.labelHeight);
+            this.panelUnused.Controls.Add(this.textWidth);
+            this.panelUnused.Controls.Add(this.textHeight);
+            this.panelUnused.Controls.Add(this.btnAffineRotate);
+            this.panelUnused.Location = new System.Drawing.Point(810, 499);
+            this.panelUnused.Name = "panelUnused";
+            this.panelUnused.Size = new System.Drawing.Size(257, 130);
+            this.panelUnused.TabIndex = 35;
+            // 
+            // lblSimpleBinarizeTreshold
+            // 
+            this.lblSimpleBinarizeTreshold.AutoSize = true;
+            this.lblSimpleBinarizeTreshold.Location = new System.Drawing.Point(132, 526);
+            this.lblSimpleBinarizeTreshold.Name = "lblSimpleBinarizeTreshold";
+            this.lblSimpleBinarizeTreshold.Size = new System.Drawing.Size(51, 13);
+            this.lblSimpleBinarizeTreshold.TabIndex = 36;
+            this.lblSimpleBinarizeTreshold.Text = "Treshold:";
+            // 
+            // textBoxSimpleBinTreshold
+            // 
+            this.textBoxSimpleBinTreshold.Location = new System.Drawing.Point(135, 545);
+            this.textBoxSimpleBinTreshold.Name = "textBoxSimpleBinTreshold";
+            this.textBoxSimpleBinTreshold.Size = new System.Drawing.Size(73, 20);
+            this.textBoxSimpleBinTreshold.TabIndex = 37;
+            this.textBoxSimpleBinTreshold.Text = "127";
+            // 
+            // lblNiblackStep
+            // 
+            this.lblNiblackStep.AutoSize = true;
+            this.lblNiblackStep.Location = new System.Drawing.Point(213, 526);
+            this.lblNiblackStep.Name = "lblNiblackStep";
+            this.lblNiblackStep.Size = new System.Drawing.Size(32, 13);
+            this.lblNiblackStep.TabIndex = 38;
+            this.lblNiblackStep.Text = "Step:";
+            // 
+            // textBoxNiblackStep
+            // 
+            this.textBoxNiblackStep.Location = new System.Drawing.Point(216, 545);
+            this.textBoxNiblackStep.Name = "textBoxNiblackStep";
+            this.textBoxNiblackStep.Size = new System.Drawing.Size(73, 20);
+            this.textBoxNiblackStep.TabIndex = 39;
+            this.textBoxNiblackStep.Text = "15";
+            // 
+            // btnMedianFilter
+            // 
+            this.btnMedianFilter.Location = new System.Drawing.Point(3, 3);
+            this.btnMedianFilter.Name = "btnMedianFilter";
+            this.btnMedianFilter.Size = new System.Drawing.Size(75, 23);
+            this.btnMedianFilter.TabIndex = 40;
+            this.btnMedianFilter.Text = "Median filter";
+            this.btnMedianFilter.UseVisualStyleBackColor = true;
+            this.btnMedianFilter.Click += new System.EventHandler(this.btnMedianFilter_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.textBoxMedianFilterStep);
+            this.panel1.Controls.Add(this.lblStep);
+            this.panel1.Controls.Add(this.btnMedianFilter);
+            this.panel1.Location = new System.Drawing.Point(396, 537);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(84, 76);
+            this.panel1.TabIndex = 41;
+            // 
+            // textBoxMedianFilterStep
+            // 
+            this.textBoxMedianFilterStep.Location = new System.Drawing.Point(7, 50);
+            this.textBoxMedianFilterStep.Name = "textBoxMedianFilterStep";
+            this.textBoxMedianFilterStep.Size = new System.Drawing.Size(71, 20);
+            this.textBoxMedianFilterStep.TabIndex = 42;
+            this.textBoxMedianFilterStep.Text = "5";
+            // 
+            // lblStep
+            // 
+            this.lblStep.AutoSize = true;
+            this.lblStep.Location = new System.Drawing.Point(4, 33);
+            this.lblStep.Name = "lblStep";
+            this.lblStep.Size = new System.Drawing.Size(32, 13);
+            this.lblStep.TabIndex = 41;
+            this.lblStep.Text = "Step:";
+            // 
+            // btnNPixelsFilter
+            // 
+            this.btnNPixelsFilter.Location = new System.Drawing.Point(396, 620);
+            this.btnNPixelsFilter.Name = "btnNPixelsFilter";
+            this.btnNPixelsFilter.Size = new System.Drawing.Size(84, 26);
+            this.btnNPixelsFilter.TabIndex = 42;
+            this.btnNPixelsFilter.Text = "N pixels filter";
+            this.btnNPixelsFilter.UseVisualStyleBackColor = true;
+            this.btnNPixelsFilter.Click += new System.EventHandler(this.btnNPixelsFilter_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1012, 625);
-            this.Controls.Add(this.btnAverage);
-            this.Controls.Add(this.btnBernsen);
+            this.ClientSize = new System.Drawing.Size(1079, 680);
+            this.Controls.Add(this.btnNPixelsFilter);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.textBoxNiblackStep);
+            this.Controls.Add(this.lblNiblackStep);
+            this.Controls.Add(this.textBoxSimpleBinTreshold);
+            this.Controls.Add(this.lblSimpleBinarizeTreshold);
+            this.Controls.Add(this.panelUnused);
+            this.Controls.Add(this.btnToDefaultImage);
+            this.Controls.Add(this.btnTriangle);
+            this.Controls.Add(this.btnYen);
+            this.Controls.Add(this.btnGraysclae);
+            this.Controls.Add(this.btnOtsu);
             this.Controls.Add(this.btnNiblack);
             this.Controls.Add(this.btnSimpleBinarize);
             this.Controls.Add(this.txtScaleY);
@@ -350,30 +474,23 @@
             this.Controls.Add(this.txtScaleX);
             this.Controls.Add(this.lblScaleX);
             this.Controls.Add(this.btnAffineScale);
-            this.Controls.Add(this.btnAffineRotate);
             this.Controls.Add(this.txtTranslateY);
             this.Controls.Add(this.lblTranslateY);
             this.Controls.Add(this.txtTranslateX);
             this.Controls.Add(this.lblTranslateX);
             this.Controls.Add(this.btnAffineTranslate);
-            this.Controls.Add(this.txtScaleRatio);
-            this.Controls.Add(this.lblScaleRatio);
-            this.Controls.Add(this.btnScaleSelection);
             this.Controls.Add(this.pictureBoxTest);
-            this.Controls.Add(this.textHeight);
-            this.Controls.Add(this.textWidth);
-            this.Controls.Add(this.labelHeight);
-            this.Controls.Add(this.labelWidth);
-            this.Controls.Add(this.btnResize);
-            this.Controls.Add(this.btnSaveToTxt);
             this.Controls.Add(this.btnConnectCamera);
             this.Controls.Add(this.btnMakePhoto);
-            this.Controls.Add(this.btnGetFromTxt);
             this.Controls.Add(this.pictureBoxCamera);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCamera)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTest)).EndInit();
+            this.panelUnused.ResumeLayout(false);
+            this.panelUnused.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -393,9 +510,6 @@
         private System.Windows.Forms.TextBox textWidth;
         private System.Windows.Forms.TextBox textHeight;
         private System.Windows.Forms.PictureBox pictureBoxTest;
-        private System.Windows.Forms.Button btnScaleSelection;
-        private System.Windows.Forms.Label lblScaleRatio;
-        private System.Windows.Forms.TextBox txtScaleRatio;
         private System.Windows.Forms.Button btnAffineTranslate;
         private System.Windows.Forms.Label lblTranslateX;
         private System.Windows.Forms.TextBox txtTranslateX;
@@ -409,8 +523,21 @@
         private System.Windows.Forms.Label lblScaleY;
         private System.Windows.Forms.Button btnSimpleBinarize;
         private System.Windows.Forms.Button btnNiblack;
-        private System.Windows.Forms.Button btnBernsen;
-        private System.Windows.Forms.Button btnAverage;
+        private System.Windows.Forms.Button btnOtsu;
+        private System.Windows.Forms.Button btnGraysclae;
+        private System.Windows.Forms.Button btnYen;
+        private System.Windows.Forms.Button btnTriangle;
+        private System.Windows.Forms.Button btnToDefaultImage;
+        private System.Windows.Forms.Panel panelUnused;
+        private System.Windows.Forms.Label lblSimpleBinarizeTreshold;
+        private System.Windows.Forms.TextBox textBoxSimpleBinTreshold;
+        private System.Windows.Forms.Label lblNiblackStep;
+        private System.Windows.Forms.TextBox textBoxNiblackStep;
+        private System.Windows.Forms.Button btnMedianFilter;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBoxMedianFilterStep;
+        private System.Windows.Forms.Label lblStep;
+        private System.Windows.Forms.Button btnNPixelsFilter;
     }
 }
 
