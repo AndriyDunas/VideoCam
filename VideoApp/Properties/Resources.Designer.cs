@@ -63,9 +63,49 @@ namespace VideoApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap digit1 {
+            get {
+                object obj = ResourceManager.GetObject("digit1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap digits {
             get {
                 object obj = ResourceManager.GetObject("digits", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap digits_rotated_plus_1 {
+            get {
+                object obj = ResourceManager.GetObject("digits_rotated_plus_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap digits_rotated_plus_2 {
+            get {
+                object obj = ResourceManager.GetObject("digits_rotated_plus_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap digits_rotated_plus_3 {
+            get {
+                object obj = ResourceManager.GetObject("digits_rotated_plus_3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

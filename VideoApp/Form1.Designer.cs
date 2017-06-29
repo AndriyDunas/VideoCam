@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBoxCamera = new System.Windows.Forms.PictureBox();
             this.btnGetFromTxt = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.btnMakePhoto = new System.Windows.Forms.Button();
@@ -39,7 +38,6 @@
             this.labelHeight = new System.Windows.Forms.Label();
             this.textWidth = new System.Windows.Forms.TextBox();
             this.textHeight = new System.Windows.Forms.TextBox();
-            this.pictureBoxTest = new System.Windows.Forms.PictureBox();
             this.btnAffineTranslate = new System.Windows.Forms.Button();
             this.lblTranslateX = new System.Windows.Forms.Label();
             this.txtTranslateX = new System.Windows.Forms.TextBox();
@@ -68,24 +66,33 @@
             this.textBoxMedianFilterStep = new System.Windows.Forms.TextBox();
             this.lblStep = new System.Windows.Forms.Label();
             this.btnNPixelsFilter = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCamera)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTest)).BeginInit();
+            this.lblN = new System.Windows.Forms.Label();
+            this.textBoxNPixels = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnRecognize = new System.Windows.Forms.Button();
+            this.lblClassName = new System.Windows.Forms.Label();
+            this.textBoxClassName = new System.Windows.Forms.TextBox();
+            this.btnSetClass = new System.Windows.Forms.Button();
+            this.btnRecognizeCandidate = new System.Windows.Forms.Button();
+            this.btnMSE = new System.Windows.Forms.Button();
+            this.btnSetImage1 = new System.Windows.Forms.Button();
+            this.textBoxDeviation = new System.Windows.Forms.TextBox();
+            this.lblDeviation = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnRotatedMinus2 = new System.Windows.Forms.Button();
+            this.buttonRotatedPlus3 = new System.Windows.Forms.Button();
+            this.pictureBoxCandidateTest = new System.Windows.Forms.PictureBox();
+            this.pictureBoxTest = new System.Windows.Forms.PictureBox();
+            this.pictureBoxCamera = new System.Windows.Forms.PictureBox();
+            this.textBoxPixelsTres = new System.Windows.Forms.TextBox();
             this.panelUnused.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCandidateTest)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTest)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCamera)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBoxCamera
-            // 
-            this.pictureBoxCamera.Image = global::VideoApp.Properties.Resources.digits;
-            this.pictureBoxCamera.Location = new System.Drawing.Point(12, 12);
-            this.pictureBoxCamera.Name = "pictureBoxCamera";
-            this.pictureBoxCamera.Size = new System.Drawing.Size(640, 480);
-            this.pictureBoxCamera.TabIndex = 0;
-            this.pictureBoxCamera.TabStop = false;
-            this.pictureBoxCamera.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxCamera_Paint);
-            this.pictureBoxCamera.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseDown);
-            this.pictureBoxCamera.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseMove);
-            this.pictureBoxCamera.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseUp);
             // 
             // btnGetFromTxt
             // 
@@ -176,14 +183,6 @@
             this.textHeight.Size = new System.Drawing.Size(57, 20);
             this.textHeight.TabIndex = 9;
             this.textHeight.Text = "300";
-            // 
-            // pictureBoxTest
-            // 
-            this.pictureBoxTest.Location = new System.Drawing.Point(668, 12);
-            this.pictureBoxTest.Name = "pictureBoxTest";
-            this.pictureBoxTest.Size = new System.Drawing.Size(399, 480);
-            this.pictureBoxTest.TabIndex = 10;
-            this.pictureBoxTest.TabStop = false;
             // 
             // btnAffineTranslate
             // 
@@ -415,6 +414,7 @@
             // 
             // panel1
             // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.textBoxMedianFilterStep);
             this.panel1.Controls.Add(this.lblStep);
             this.panel1.Controls.Add(this.btnMedianFilter);
@@ -429,7 +429,7 @@
             this.textBoxMedianFilterStep.Name = "textBoxMedianFilterStep";
             this.textBoxMedianFilterStep.Size = new System.Drawing.Size(71, 20);
             this.textBoxMedianFilterStep.TabIndex = 42;
-            this.textBoxMedianFilterStep.Text = "5";
+            this.textBoxMedianFilterStep.Text = "3";
             // 
             // lblStep
             // 
@@ -442,20 +442,210 @@
             // 
             // btnNPixelsFilter
             // 
-            this.btnNPixelsFilter.Location = new System.Drawing.Point(396, 620);
+            this.btnNPixelsFilter.Location = new System.Drawing.Point(3, 3);
             this.btnNPixelsFilter.Name = "btnNPixelsFilter";
-            this.btnNPixelsFilter.Size = new System.Drawing.Size(84, 26);
+            this.btnNPixelsFilter.Size = new System.Drawing.Size(76, 26);
             this.btnNPixelsFilter.TabIndex = 42;
             this.btnNPixelsFilter.Text = "N pixels filter";
             this.btnNPixelsFilter.UseVisualStyleBackColor = true;
             this.btnNPixelsFilter.Click += new System.EventHandler(this.btnNPixelsFilter_Click);
             // 
+            // lblN
+            // 
+            this.lblN.AutoSize = true;
+            this.lblN.Location = new System.Drawing.Point(3, 39);
+            this.lblN.Name = "lblN";
+            this.lblN.Size = new System.Drawing.Size(18, 13);
+            this.lblN.TabIndex = 43;
+            this.lblN.Text = "N:";
+            // 
+            // textBoxNPixels
+            // 
+            this.textBoxNPixels.Location = new System.Drawing.Point(23, 36);
+            this.textBoxNPixels.Name = "textBoxNPixels";
+            this.textBoxNPixels.Size = new System.Drawing.Size(55, 20);
+            this.textBoxNPixels.TabIndex = 44;
+            this.textBoxNPixels.Text = "2";
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.btnNPixelsFilter);
+            this.panel2.Controls.Add(this.textBoxNPixels);
+            this.panel2.Controls.Add(this.lblN);
+            this.panel2.Location = new System.Drawing.Point(396, 619);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(84, 62);
+            this.panel2.TabIndex = 45;
+            // 
+            // btnRecognize
+            // 
+            this.btnRecognize.Location = new System.Drawing.Point(13, 625);
+            this.btnRecognize.Name = "btnRecognize";
+            this.btnRecognize.Size = new System.Drawing.Size(75, 23);
+            this.btnRecognize.TabIndex = 46;
+            this.btnRecognize.Text = "Recognize";
+            this.btnRecognize.UseVisualStyleBackColor = true;
+            this.btnRecognize.Click += new System.EventHandler(this.btnRecognize_Click);
+            // 
+            // lblClassName
+            // 
+            this.lblClassName.AutoSize = true;
+            this.lblClassName.Location = new System.Drawing.Point(692, 499);
+            this.lblClassName.Name = "lblClassName";
+            this.lblClassName.Size = new System.Drawing.Size(64, 13);
+            this.lblClassName.TabIndex = 47;
+            this.lblClassName.Text = "Class name:";
+            // 
+            // textBoxClassName
+            // 
+            this.textBoxClassName.Location = new System.Drawing.Point(695, 516);
+            this.textBoxClassName.Name = "textBoxClassName";
+            this.textBoxClassName.Size = new System.Drawing.Size(91, 20);
+            this.textBoxClassName.TabIndex = 48;
+            // 
+            // btnSetClass
+            // 
+            this.btnSetClass.Location = new System.Drawing.Point(695, 540);
+            this.btnSetClass.Name = "btnSetClass";
+            this.btnSetClass.Size = new System.Drawing.Size(75, 23);
+            this.btnSetClass.TabIndex = 49;
+            this.btnSetClass.Text = "Set class";
+            this.btnSetClass.UseVisualStyleBackColor = true;
+            this.btnSetClass.Click += new System.EventHandler(this.btnSetClass_Click);
+            // 
+            // btnRecognizeCandidate
+            // 
+            this.btnRecognizeCandidate.Location = new System.Drawing.Point(13, 656);
+            this.btnRecognizeCandidate.Name = "btnRecognizeCandidate";
+            this.btnRecognizeCandidate.Size = new System.Drawing.Size(125, 26);
+            this.btnRecognizeCandidate.TabIndex = 50;
+            this.btnRecognizeCandidate.Text = "Recognize candidate";
+            this.btnRecognizeCandidate.UseVisualStyleBackColor = true;
+            this.btnRecognizeCandidate.Click += new System.EventHandler(this.btnRecognizeCandidate_Click);
+            // 
+            // btnMSE
+            // 
+            this.btnMSE.Location = new System.Drawing.Point(144, 656);
+            this.btnMSE.Name = "btnMSE";
+            this.btnMSE.Size = new System.Drawing.Size(75, 26);
+            this.btnMSE.TabIndex = 52;
+            this.btnMSE.Text = "MSE";
+            this.btnMSE.UseVisualStyleBackColor = true;
+            this.btnMSE.Click += new System.EventHandler(this.btnMSE_Click);
+            // 
+            // btnSetImage1
+            // 
+            this.btnSetImage1.Location = new System.Drawing.Point(3, 6);
+            this.btnSetImage1.Name = "btnSetImage1";
+            this.btnSetImage1.Size = new System.Drawing.Size(75, 23);
+            this.btnSetImage1.TabIndex = 53;
+            this.btnSetImage1.Text = "Rotated + 1";
+            this.btnSetImage1.UseVisualStyleBackColor = true;
+            this.btnSetImage1.Click += new System.EventHandler(this.btnSetImage1_Click);
+            // 
+            // textBoxDeviation
+            // 
+            this.textBoxDeviation.Location = new System.Drawing.Point(810, 659);
+            this.textBoxDeviation.Name = "textBoxDeviation";
+            this.textBoxDeviation.Size = new System.Drawing.Size(100, 20);
+            this.textBoxDeviation.TabIndex = 54;
+            // 
+            // lblDeviation
+            // 
+            this.lblDeviation.AutoSize = true;
+            this.lblDeviation.Location = new System.Drawing.Point(807, 643);
+            this.lblDeviation.Name = "lblDeviation";
+            this.lblDeviation.Size = new System.Drawing.Size(55, 13);
+            this.lblDeviation.TabIndex = 55;
+            this.lblDeviation.Text = "Deviation:";
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.buttonRotatedPlus3);
+            this.panel3.Controls.Add(this.btnRotatedMinus2);
+            this.panel3.Controls.Add(this.btnSetImage1);
+            this.panel3.Location = new System.Drawing.Point(1074, 498);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(255, 131);
+            this.panel3.TabIndex = 56;
+            // 
+            // btnRotatedMinus2
+            // 
+            this.btnRotatedMinus2.Location = new System.Drawing.Point(84, 6);
+            this.btnRotatedMinus2.Name = "btnRotatedMinus2";
+            this.btnRotatedMinus2.Size = new System.Drawing.Size(75, 23);
+            this.btnRotatedMinus2.TabIndex = 54;
+            this.btnRotatedMinus2.Text = "Rotated + 2";
+            this.btnRotatedMinus2.UseVisualStyleBackColor = true;
+            this.btnRotatedMinus2.Click += new System.EventHandler(this.btnRotatedMinus2_Click);
+            // 
+            // buttonRotatedPlus3
+            // 
+            this.buttonRotatedPlus3.Location = new System.Drawing.Point(165, 7);
+            this.buttonRotatedPlus3.Name = "buttonRotatedPlus3";
+            this.buttonRotatedPlus3.Size = new System.Drawing.Size(75, 23);
+            this.buttonRotatedPlus3.TabIndex = 55;
+            this.buttonRotatedPlus3.Text = "Rotated + 3";
+            this.buttonRotatedPlus3.UseVisualStyleBackColor = true;
+            this.buttonRotatedPlus3.Click += new System.EventHandler(this.buttonRotatedPlus3_Click);
+            // 
+            // pictureBoxCandidateTest
+            // 
+            this.pictureBoxCandidateTest.Location = new System.Drawing.Point(668, 257);
+            this.pictureBoxCandidateTest.Name = "pictureBoxCandidateTest";
+            this.pictureBoxCandidateTest.Size = new System.Drawing.Size(640, 235);
+            this.pictureBoxCandidateTest.TabIndex = 51;
+            this.pictureBoxCandidateTest.TabStop = false;
+            // 
+            // pictureBoxTest
+            // 
+            this.pictureBoxTest.Location = new System.Drawing.Point(668, 12);
+            this.pictureBoxTest.Name = "pictureBoxTest";
+            this.pictureBoxTest.Size = new System.Drawing.Size(640, 239);
+            this.pictureBoxTest.TabIndex = 10;
+            this.pictureBoxTest.TabStop = false;
+            this.pictureBoxTest.Click += new System.EventHandler(this.pictureBoxTest_Click);
+            // 
+            // pictureBoxCamera
+            // 
+            this.pictureBoxCamera.Image = global::VideoApp.Properties.Resources.digits;
+            this.pictureBoxCamera.Location = new System.Drawing.Point(12, 12);
+            this.pictureBoxCamera.Name = "pictureBoxCamera";
+            this.pictureBoxCamera.Size = new System.Drawing.Size(640, 480);
+            this.pictureBoxCamera.TabIndex = 0;
+            this.pictureBoxCamera.TabStop = false;
+            this.pictureBoxCamera.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxCamera_Paint);
+            this.pictureBoxCamera.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseDown);
+            this.pictureBoxCamera.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseMove);
+            this.pictureBoxCamera.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseUp);
+            // 
+            // textBoxPixelsTres
+            // 
+            this.textBoxPixelsTres.Location = new System.Drawing.Point(486, 656);
+            this.textBoxPixelsTres.Name = "textBoxPixelsTres";
+            this.textBoxPixelsTres.Size = new System.Drawing.Size(54, 20);
+            this.textBoxPixelsTres.TabIndex = 57;
+            this.textBoxPixelsTres.Text = "3";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1079, 680);
-            this.Controls.Add(this.btnNPixelsFilter);
+            this.ClientSize = new System.Drawing.Size(1341, 695);
+            this.Controls.Add(this.textBoxPixelsTres);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.lblDeviation);
+            this.Controls.Add(this.textBoxDeviation);
+            this.Controls.Add(this.btnMSE);
+            this.Controls.Add(this.pictureBoxCandidateTest);
+            this.Controls.Add(this.btnRecognizeCandidate);
+            this.Controls.Add(this.btnSetClass);
+            this.Controls.Add(this.textBoxClassName);
+            this.Controls.Add(this.lblClassName);
+            this.Controls.Add(this.btnRecognize);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.textBoxNiblackStep);
             this.Controls.Add(this.lblNiblackStep);
@@ -485,12 +675,16 @@
             this.Controls.Add(this.pictureBoxCamera);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCamera)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTest)).EndInit();
             this.panelUnused.ResumeLayout(false);
             this.panelUnused.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCandidateTest)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTest)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCamera)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -538,6 +732,23 @@
         private System.Windows.Forms.TextBox textBoxMedianFilterStep;
         private System.Windows.Forms.Label lblStep;
         private System.Windows.Forms.Button btnNPixelsFilter;
+        private System.Windows.Forms.Label lblN;
+        private System.Windows.Forms.TextBox textBoxNPixels;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnRecognize;
+        private System.Windows.Forms.Label lblClassName;
+        private System.Windows.Forms.TextBox textBoxClassName;
+        private System.Windows.Forms.Button btnSetClass;
+        private System.Windows.Forms.Button btnRecognizeCandidate;
+        private System.Windows.Forms.PictureBox pictureBoxCandidateTest;
+        private System.Windows.Forms.Button btnMSE;
+        private System.Windows.Forms.Button btnSetImage1;
+        private System.Windows.Forms.TextBox textBoxDeviation;
+        private System.Windows.Forms.Label lblDeviation;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button btnRotatedMinus2;
+        private System.Windows.Forms.Button buttonRotatedPlus3;
+        private System.Windows.Forms.TextBox textBoxPixelsTres;
     }
 }
 

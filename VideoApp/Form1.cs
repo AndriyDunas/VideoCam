@@ -29,6 +29,17 @@ namespace VideoApp
         private Rectangle Rect = new Rectangle();
         private Brush selectionBrush = new SolidBrush(Color.FromArgb(128, 72, 145, 220));
 
+        Graphics recGraphics;
+        Bitmap recBitmap;
+
+        int[][] imageMatrix;
+        int[][] recImageMatrix;
+
+        int[][][] etalon3040Matrix;
+        int[][][] candidate3040Matrix;
+
+        string[] ClassesArray = new string[100];
+
         enum Coords
         {
             X = 0,
@@ -318,7 +329,6 @@ namespace VideoApp
                 for (int y = sizeOfImage + 100 - 1; y >= 100; y--)
                 {
                     Color color = default_image.GetPixel(x, y);
-                    //default_image.SetPixel(x, y, Color.Transparent);
                     SetPointVector(x, y, 1.0);
                     MultiplyMatrices();
 
@@ -336,7 +346,7 @@ namespace VideoApp
         private void ScaleAffine()
         {
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
-            int sizeOfImage = 100;
+            int sizeOfImage = 110;
 
             double scaleX = Convert.ToDouble(txtScaleX.Text);
             double scaleY = Convert.ToDouble(txtScaleY.Text);
@@ -467,6 +477,13 @@ namespace VideoApp
 
         private void SegmentImageWithGlobalTreshold(Bitmap _image, int _treshold)
         {
+            imageMatrix = new int[_image.Width][];
+
+            for (int i = 0; i < _image.Width; i++)
+            {
+                imageMatrix[i] = new int[_image.Height];
+            }
+
             for (int x = 0; x < _image.Width; x++)
             {
                 for (int y = 0; y < _image.Height; ++y)
@@ -475,10 +492,12 @@ namespace VideoApp
                     if (intensityOfPixel < _treshold)
                     {
                         _image.SetPixel(x, y, Color.Black);
+                        imageMatrix[x][y] = 1;
                     }
                     else
                     {
                         _image.SetPixel(x, y, Color.White);
+                        imageMatrix[x][y] = 0;
                     }
                 }
             }
@@ -576,7 +595,7 @@ namespace VideoApp
             pictureBoxCamera.Image = new_image;
         }
 
-        private int OtsuTreshold(int [] data) 
+        private int OtsuTreshold(int[] data)
         {
             // Otsu's threshold algorithm
             // C++ code by Jordan Bevik <Jordan.Bevic@qtiworld.com>
@@ -586,11 +605,12 @@ namespace VideoApp
             double BCV, BCVmax; // The current Between Class Variance and maximum BCV
             double num, denom;  // temporary bookeeping
             double Sk;  // The total intensity for all histogram points <=k
-            double S, L=256; // The total intensity of the image
+            double S, L = 256; // The total intensity of the image
 
             // Initialize values:
             S = N = 0;
-            for (k=0; k<L; k++){
+            for (k = 0; k < L; k++)
+            {
                 S += (double)k * data[k];   // Total histogram intensity
                 N += data[k];       // Total number of data points
             }
@@ -598,28 +618,31 @@ namespace VideoApp
             Sk = 0;
             N1 = data[0]; // The entry for zero intensity
             BCV = 0;
-            BCVmax=0;
+            BCVmax = 0;
             treshold = 0;
 
             // Look at each possible threshold value,
             // calculate the between-class variance, and decide if it's a max
-            for (k=1; k<L-1; k++) { // No need to check endpoints k = 0 or k = L-1
+            for (k = 1; k < L - 1; k++)
+            { // No need to check endpoints k = 0 or k = L-1
                 Sk += (double)k * data[k];
                 N1 += data[k];
 
                 // The float casting here is to avoid compiler warning about loss of precision and
                 // will prevent overflow in the case of large saturated images
-                denom = (double)( N1) * (N - N1); // Maximum value of denom is (N^2)/4 =  approx. 3E10
+                denom = (double)(N1) * (N - N1); // Maximum value of denom is (N^2)/4 =  approx. 3E10
 
-                if (denom != 0 ){
+                if (denom != 0)
+                {
                     // Float here is to avoid loss of precision when dividing
-                    num = ( (double)N1 / N ) * S - Sk;  // Maximum value of num =  255*N = approx 8E7
+                    num = ((double)N1 / N) * S - Sk;  // Maximum value of num =  255*N = approx 8E7
                     BCV = (num * num) / denom;
                 }
                 else
                     BCV = 0;
 
-                if (BCV >= BCVmax){ // Assign the best threshold found so far
+                if (BCV >= BCVmax)
+                { // Assign the best threshold found so far
                     BCVmax = BCV;
                     treshold = k;
                 }
@@ -762,7 +785,7 @@ namespace VideoApp
             max_crit = Double.MinValue;
             for (it = 0; it < 256; it++)
             {
-                                                                                                     // NOTE: in original algorithm used value -1 instead 2
+                // NOTE: in original algorithm used value -1 instead 2
                 crit = -1.0 * ((P1_sq[it] * P2_sq[it]) > 0.0 ? Math.Log(P1_sq[it] * P2_sq[it]) : 0.0) + 2 * ((P1[it] * (1.0 - P1[it])) > 0.0 ? Math.Log(P1[it] * (1.0 - P1[it])) : 0.0);
                 if (crit > max_crit)
                 {
@@ -908,7 +931,7 @@ namespace VideoApp
         {
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
             Triangle(default_image);
-            
+
         }
 
         private void btnToDefaultImage_Click(object sender, EventArgs e)
@@ -999,29 +1022,145 @@ namespace VideoApp
             int height = default_image.Height;
             int width = default_image.Width;
 
-            int w = 2;
+            int w = Convert.ToInt32(textBoxNPixels.Text);
             bool brushWhite = false;
+            Moving moving = Moving.RIGHT;
+            //int number = 0;
+
+
+            //for (int y = 10; y < height - 10; y++)
+            //{
+            //    for (int x = 10; x < width - 10; x++)
+            //    {
+            //        if (imageMatrix[x][y] == 1)
+            //        {
+            //            int xloc = x;
+            //            int yloc = y;
+            //            moving = Moving.RIGHT;
+            //            number = 0;
+
+            //            do
+            //            {
+            //                int intencity_right = imageMatrix[xloc + 1][yloc];
+            //                int intencity_down = imageMatrix[xloc][yloc + 1];
+            //                int intencity_left = imageMatrix[xloc - 1][yloc];
+            //                int intencity_up = imageMatrix[xloc][yloc - 1];
+            //                int intencity_right_up = imageMatrix[xloc + 1][yloc - 1];
+            //                int intencity_left_up = imageMatrix[xloc - 1][yloc - 1];
+            //                int intencity_down_right = imageMatrix[xloc + 1][yloc + 1];
+            //                int intencity_left_down = imageMatrix[xloc - 1][yloc + 1];
+
+            //                if (moving == Moving.RIGHT)
+            //                {
+            //                    if (intencity_down == 1 && intencity_right == 0)
+            //                    {
+            //                        yloc++;
+            //                        number++;
+            //                        moving = Moving.DOWN;
+            //                    }
+            //                    else if (intencity_up == 1 && intencity_left_up == 0)
+            //                    {
+            //                        yloc--;
+            //                        number++;
+            //                        moving = Moving.UP;
+            //                    }
+            //                    else if (intencity_right == 1)
+            //                    {
+            //                        xloc++;
+            //                        number++;
+            //                    }
+            //                }
+            //                else if (moving == Moving.DOWN)
+            //                {
+            //                    if (intencity_right == 1 && intencity_right_up == 0)
+            //                    {
+            //                        xloc++;
+            //                        number++;
+            //                        moving = Moving.RIGHT;
+            //                    }
+            //                    else if (intencity_left == 1 && intencity_down == 0)
+            //                    {
+            //                        xloc--;
+            //                        number++;
+            //                        moving = Moving.LEFT;
+            //                    }
+            //                    else if (intencity_down == 1)
+            //                    {
+            //                        yloc++;
+            //                        number++;
+            //                    }
+            //                }
+            //                else if (moving == Moving.LEFT)
+            //                {
+            //                    if (intencity_down == 1 && intencity_down_right == 0)
+            //                    {
+            //                        yloc++;
+            //                        number++;
+            //                        moving = Moving.DOWN;
+            //                    }
+            //                    else if (intencity_up == 1 && intencity_left == 0)
+            //                    {
+            //                        yloc--;
+            //                        number++;
+            //                        moving = Moving.UP;
+            //                    }
+            //                    else if (intencity_left == 1)
+            //                    {
+            //                        xloc--;
+            //                        number++;
+            //                    }
+            //                }
+            //                else if (moving == Moving.UP)
+            //                {
+            //                    if (intencity_right == 1 && intencity_up == 0)
+            //                    {
+            //                        xloc++;
+            //                        number++;
+            //                        moving = Moving.RIGHT;
+            //                    }
+            //                    else if (intencity_left == 1 && intencity_left_down == 0)
+            //                    {
+            //                        xloc--;
+            //                        number++;
+            //                        moving = Moving.LEFT;
+            //                    }
+            //                    else if (intencity_up == 1)
+            //                    {
+            //                        yloc--;
+            //                        number++;
+            //                    }
+            //                }
+
+            //                if (number == 14)
+            //                    break;
+                            
+            //            } while (xloc != x || yloc != y);
+
+            //            if (number < 14)
+            //                new_image.SetPixel(x, y, Color.DarkOrange);
+            //        }
+            //    }
+            //}
+
+            int NumberTres = Convert.ToInt32(textBoxPixelsTres.Text);
 
             for (int x = w / 2; x < width; x += w)
             {
                 for (int y = w / 2; y < height; y += w)
                 {
+                    int numberOfBlackPixelsDown = 0;
                     for (int i = x - w / 2; i < x + w / 2; i++)
                     {
                         for (int j = y - w / 2; j < y + w / 2; j++)
                         {
-                            if (GetIntensityOfPixel(default_image, i, j) > 127)
+                            if (GetIntensityOfPixel(default_image, i, j) <= 127)
                             {
-                                brushWhite = true;
-                                break;
+                                numberOfBlackPixelsDown++;
                             }
                         }
-                        if (brushWhite)
-                        {
-                            break;
-                        }
                     }
-                    if (brushWhite)
+
+                    if (numberOfBlackPixelsDown < NumberTres)
                     {
                         for (int i = x - w / 2; i < x + w / 2; i++)
                         {
@@ -1031,11 +1170,85 @@ namespace VideoApp
                                     new_image.SetPixel(i, j, Color.White);
                             }
                         }
-                        brushWhite = false;
-                        continue;
                     }
                 }
             }
+
+
+
+
+            //for (int x = w / 2; x < width; x += w)
+            //{
+            //    for (int y = w / 2; y < height; y += w)
+            //    {
+            //        int numberOfBlackPixelsLeft = 0;
+            //        int numberOfBlackPixelsRight = 0;
+            //        int numberOfBlackPixelsTop = 0;
+            //        int numberOfBlackPixelsDown = 0;
+            //        for (int i = x - w / 2; i < x; i++)
+            //        {
+            //            for (int j = y - w / 2; j < y + w / 2; j++)
+            //            {
+            //                if (GetIntensityOfPixel(default_image, i, j) <= 127)
+            //                {
+            //                    numberOfBlackPixelsLeft++;
+            //                }
+            //            }
+            //        }
+            //        for (int i = x; i < x + w / 2; i++)
+            //        {
+            //            for (int j = y - w / 2; j < y + w / 2; j++)
+            //            {
+            //                if (GetIntensityOfPixel(default_image, i, j) <= 127)
+            //                {
+            //                    numberOfBlackPixelsRight++;
+            //                }
+            //            }
+            //        }
+            //        for (int i = x - w / 2; i < x + w / 2; i++)
+            //        {
+            //            for (int j = y - w / 2; j < y; j++)
+            //            {
+            //                if (GetIntensityOfPixel(default_image, i, j) <= 127)
+            //                {
+            //                    numberOfBlackPixelsTop++;
+            //                }
+            //            }
+            //        }
+            //        for (int i = x - w / 2; i < x + w / 2; i++)
+            //        {
+            //            for (int j = y; j < y + w / 2; j++)
+            //            {
+            //                if (GetIntensityOfPixel(default_image, i, j) <= 127)
+            //                {
+            //                    numberOfBlackPixelsDown++;
+            //                }
+            //            }
+            //        }
+            //        int tres = 8;
+
+            //        if (numberOfBlackPixelsLeft < tres && numberOfBlackPixelsRight < tres && numberOfBlackPixelsTop < tres && numberOfBlackPixelsDown < tres)
+            //        {
+            //            brushWhite = true;
+            //        }
+
+
+
+            //        if (brushWhite)
+            //        {
+            //            for (int i = x - w / 2; i < x + w / 2; i++)
+            //            {
+            //                for (int j = y - w / 2; j < y + w / 2; j++)
+            //                {
+            //                    if (i < width && j < height)
+            //                        new_image.SetPixel(i, j, Color.White);
+            //                }
+            //            }
+            //            brushWhite = false;
+            //            continue;
+            //        }
+            //    }
+            //}
         }
 
         private void btnNPixelsFilter_Click(object sender, EventArgs e)
@@ -1045,5 +1258,394 @@ namespace VideoApp
             NPixelsFilter(default_image, new_image);
             pictureBoxCamera.Image = new_image;
         }
+
+        enum Moves
+        {
+            Right = 0,
+            Down,
+            Left,
+            Up
+        };
+
+        enum Moving
+        {
+            RIGHT_DOWN = 0,
+            LEFT_DOWN,
+            LEFT_UP,
+            RIGHT_UP,
+            RIGHT,
+            LEFT,
+            UP,
+            DOWN
+        };
+
+        private void MakeCounters(Bitmap _image)
+        {
+            int width = _image.Width;
+            int height = _image.Height;
+
+            recImageMatrix = new int[_image.Width][];
+            for (int i = 0; i < _image.Width; i++)
+            {
+                recImageMatrix[i] = new int[_image.Height];
+            }
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                    recImageMatrix[i][j] = 0;
+            }
+
+
+
+
+            int ymin = 1000, ymax = 0, xmin = 1000, xmax = 0;
+            int recognizedElementNumber = 1;
+
+            Moving moving = Moving.RIGHT;
+
+            for (int y = 10; y < height-5; y++)
+            {
+                for (int x = 10; x < width-5; x++)
+                {
+                    if (imageMatrix[x][y] == 1 && recImageMatrix[x][y] == 0)
+                    {
+                        recImageMatrix[x][y] = recognizedElementNumber;
+                        
+                        int xloc = x;
+                        int yloc = y;
+                        moving = Moving.RIGHT;
+
+                        ymax = 0;
+                        xmin = 1000;
+                        xmax = 0;
+
+                        ymin = y;
+                        do
+                        {
+                            int intencity_right = imageMatrix[xloc + 1][yloc];
+                            int intencity_down = imageMatrix[xloc][yloc + 1];
+                            int intencity_left = imageMatrix[xloc - 1][yloc];
+                            int intencity_up = imageMatrix[xloc][yloc - 1];
+                            int intencity_right_up = imageMatrix[xloc + 1][yloc - 1];
+                            int intencity_left_up = imageMatrix[xloc - 1][yloc - 1];
+                            int intencity_down_right = imageMatrix[xloc + 1][yloc + 1];
+                            int intencity_left_down = imageMatrix[xloc - 1][yloc + 1];
+
+                            if (moving == Moving.RIGHT)
+                            {
+                                if (intencity_down == 1 && intencity_right == 0)
+                                {
+                                    yloc++;
+                                    _image.SetPixel(xloc, yloc, Color.Red);
+                                    moving = Moving.DOWN;
+                                }
+                                else if (intencity_up == 1 && intencity_left_up == 0)
+                                {
+                                    yloc--;
+                                    _image.SetPixel(xloc, yloc, Color.Red);
+                                    moving = Moving.UP;
+                                }
+                                else if (intencity_right == 1)
+                                {
+                                    xloc++;
+                                    _image.SetPixel(xloc, yloc, Color.Red);
+                                }
+                            }
+                            else if (moving == Moving.DOWN)
+                            {
+                                if (intencity_right == 1 && intencity_right_up == 0)
+                                {
+                                    xloc++;
+                                    _image.SetPixel(xloc, yloc, Color.Green);
+                                    moving = Moving.RIGHT;
+                                }
+                                else if (intencity_left == 1 && intencity_down == 0)
+                                {
+                                    xloc--;
+                                    _image.SetPixel(xloc, yloc, Color.Green);
+                                    moving = Moving.LEFT;
+                                }
+                                else if (intencity_down == 1)
+                                {
+                                    yloc++;
+                                    _image.SetPixel(xloc, yloc, Color.Green);
+                                }
+                            }
+                            else if (moving == Moving.LEFT)
+                            {
+                                if (intencity_down == 1 && intencity_down_right == 0)
+                                {
+                                    yloc++;
+                                    _image.SetPixel(xloc, yloc, Color.Yellow);
+                                    moving = Moving.DOWN;
+                                }
+                                else if (intencity_up == 1 && intencity_left == 0)
+                                {
+                                    yloc--;
+                                    _image.SetPixel(xloc, yloc, Color.Yellow);
+                                    moving = Moving.UP;
+                                }
+                                else if (intencity_left == 1)
+                                {
+                                    xloc--;
+                                    _image.SetPixel(xloc, yloc, Color.Yellow);
+                                }
+                            }
+                            else if (moving == Moving.UP)
+                            {
+                                if (intencity_right == 1 && intencity_up == 0)
+                                {
+                                    xloc++;
+                                    _image.SetPixel(xloc, yloc, Color.Blue);
+                                    moving = Moving.RIGHT;
+                                }
+                                else if (intencity_left == 1 && intencity_left_down == 0)
+                                {
+                                    xloc--;
+                                    _image.SetPixel(xloc, yloc, Color.Blue);
+                                    moving = Moving.LEFT;
+                                }
+                                else if (intencity_up == 1)
+                                {
+                                    yloc--;
+                                    _image.SetPixel(xloc, yloc, Color.Blue);
+                                }
+                            }
+                            recImageMatrix[xloc][yloc] = recognizedElementNumber;
+
+                            if (yloc > ymax) ymax = yloc;
+                            if (xloc > xmax) xmax = xloc;
+                            if (xloc < xmin) xmin = xloc;
+
+                        } while (xloc != x || yloc != y);
+
+                        for (int a = xmin; a < xmax; a++)
+                            for (int b = ymin; b < ymax; b++)
+                                if (imageMatrix[a][b] == 1)
+                                {
+                                    recImageMatrix[a][b] = recognizedElementNumber;
+                                    _image.SetPixel(a, b, Color.DarkOrange);
+                                }
+                        recognizedElementNumber++;
+                        DrawRecognized(_image, xmin, xmax, ymin, ymax);
+                    }
+                }
+            }
+
+        }
+
+        private void Recognize(Bitmap _image)
+        {
+            MakeCounters(_image);
+        }
+
+        private void btnRecognize_Click(object sender, EventArgs e)
+        {
+            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
+            PrepareGraphics(default_image);
+            Recognize(default_image);
+            defaultWidthOffset = 0;
+            
+            recGraphics.Dispose();
+
+            pictureBoxTest.Image = recBitmap;
+
+            int countOfElems = 1;
+
+
+            etalon3040Matrix = new int[20][][];
+            for (int i = 0; i < 20; i++)
+            {
+                etalon3040Matrix[i] = new int[30][];
+            }
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 30; j++)
+                    etalon3040Matrix[i][j] = new int[40];
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 30; j++)
+                {
+                    for (int k = 0; k < 40; k++)
+                    {
+                        etalon3040Matrix[i][j][k] = 0;
+                    }
+                }
+            }
+
+            for (int glob = 0; glob < 5; glob++)
+            {
+                for (int i = 0; i < 30; i++)
+                {
+                    for (int j = 0; j < 40; j++)
+                    {
+                        int intencity = GetIntensityOfPixel(recBitmap, glob*30 + i, j);
+                        if (intencity <= 230)
+                        {
+                            etalon3040Matrix[glob][i][j] = countOfElems;
+                        }
+                    }
+                }
+                countOfElems++;
+            }
+        }
+
+        private void PrepareGraphics(Bitmap default_image)
+        {
+            //create a blank bitmap the same size as original
+            recBitmap = new Bitmap(default_image.Width, default_image.Height);
+            recGraphics = Graphics.FromImage(recBitmap);
+            recGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            recGraphics.SmoothingMode = SmoothingMode.HighQuality;
+            recGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            recGraphics.CompositingQuality = CompositingQuality.HighQuality;
+
+            recGraphics.Clear(Color.Transparent);
+        }
+
+        private int defaultWidthOffset = 0;
+        private int defaultHeightOffset = 0;
+
+        private void DrawRecognized(Bitmap default_image, int xmin, int xmax, int ymin, int ymax)
+        {
+            //draw the original image on the new image
+            recGraphics.DrawImage(default_image, new Rectangle(defaultWidthOffset, defaultHeightOffset, 30, 40),
+               xmin, ymin, xmax-xmin+1, ymax-ymin+1, GraphicsUnit.Pixel);
+
+            defaultWidthOffset += 30;
+            //defaultHeightOffset += 40;
+        }
+
+        private int imageClass = 0;
+
+        private void btnSetClass_Click(object sender, EventArgs e)
+        {
+            ClassesArray[imageClass] = textBoxClassName.Text;
+        }
+
+        private void pictureBoxTest_Click(object sender, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            Point coordinates = me.Location;
+            
+
+            imageClass = etalon3040Matrix[coordinates.X / 30][coordinates.X % 30][coordinates.Y];
+            MessageBox.Show(string.Format("X: {0} Y: {1}", coordinates.X, coordinates.Y));
+        }
+
+        private void btnRecognizeCandidate_Click(object sender, EventArgs e)
+        {
+            Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
+            PrepareGraphics(default_image);
+            Recognize(default_image);
+            defaultWidthOffset = 0;
+            recGraphics.Dispose();
+
+            pictureBoxCandidateTest.Image = recBitmap;
+
+            int countOfElems = 1;
+
+            candidate3040Matrix = new int[20][][];
+            for (int i = 0; i < 20; i++)
+            {
+                candidate3040Matrix[i] = new int[30][];
+            }
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 30; j++)
+                    candidate3040Matrix[i][j] = new int[40];
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 30; j++)
+                {
+                    for (int k = 0; k < 40; k++)
+                    {
+                        candidate3040Matrix[i][j][k] = 0;
+                    }
+                }
+            }
+
+            for (int glob = 0; glob < 5; glob++)
+            {
+                for (int i = 0; i < 30; i++)
+                {
+                    for (int j = 0; j < 40; j++)
+                    {
+                        int intencity = GetIntensityOfPixel(recBitmap, glob * 30 + i, j);
+                        if (intencity <= 230)
+                        {
+                            candidate3040Matrix[glob][i][j] = countOfElems;
+                        }
+                    }
+                }
+                countOfElems++;
+            }
+
+        }
+
+        private double MSEComparation()
+        {
+            double totalKorr = 0.0;
+
+            Bitmap etalonBitmap = new Bitmap(pictureBoxTest.Image);
+            Bitmap candidateBitmap = new Bitmap(pictureBoxCandidateTest.Image);
+
+            for (int glob = 0; glob < 5; glob++)
+            {
+                for (int i = 0; i < 30; i++)
+                {
+                    for (int j = 0; j < 40; j++)
+                    {
+                        int intencityCandidate = GetIntensityOfPixel(candidateBitmap, glob * 30 + i, j);
+                        int intencityEtalon = GetIntensityOfPixel(etalonBitmap, glob * 30 + i, j);
+                        double intencityPow = Math.Pow(Math.Abs(intencityCandidate - intencityEtalon), 2.0);
+                        totalKorr += intencityPow;
+                    }
+                }
+            }
+
+            double mseDev = totalKorr / (5*40*30);
+
+            textBoxDeviation.Text = Convert.ToString(mseDev);
+
+            return mseDev;
+        }
+
+        private void btnMSE_Click(object sender, EventArgs e)
+        {
+            double dev = MSEComparation();
+        }
+
+        private void btnSetImage1_Click(object sender, EventArgs e)
+        {
+            if (camera.IsConnected())
+            {
+                backgroundWorker1.CancelAsync();
+            }
+            pictureBoxCamera.Image = VideoApp.Properties.Resources.digits_rotated_plus_1;
+        }
+
+        private void btnRotatedMinus2_Click(object sender, EventArgs e)
+        {
+            if (camera.IsConnected())
+            {
+                backgroundWorker1.CancelAsync();
+            }
+            pictureBoxCamera.Image = VideoApp.Properties.Resources.digits_rotated_plus_2;
+        }
+
+        private void buttonRotatedPlus3_Click(object sender, EventArgs e)
+        {
+            if (camera.IsConnected())
+            {
+                backgroundWorker1.CancelAsync();
+            }
+            pictureBoxCamera.Image = VideoApp.Properties.Resources.digits_rotated_plus_3;
+        }
+
     }
 }

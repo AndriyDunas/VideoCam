@@ -209,6 +209,30 @@
   <ItemGroup>
     <None Include="Resources\digits.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\digit1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\digit1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\digits_rotated+1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\digits_rotated-2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\digits_rotated_minus_2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\digits_rotated_plus_1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\digits_rotated_plus_2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\digits_rotated_plus_3.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
