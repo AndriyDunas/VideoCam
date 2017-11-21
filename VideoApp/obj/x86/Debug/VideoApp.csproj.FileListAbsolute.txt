@@ -124,3 +124,125 @@ D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.For
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Properties.Resources.resources
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csproj.GenerateResource.Cache
 D:\Other\Synced\politeh\5k2s\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csprojResolveAssemblyReference.cache
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.exe
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.pdb
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\VideoApp.exe
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\VideoApp.pdb
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Controls.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Fuzzy.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Genetic.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Imaging.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Imaging.Formats.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.MachineLearning.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Math.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Neuro.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Robotics.Lego.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Robotics.Surveyor.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Robotics.TeRK.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.DirectShow.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.FFMPEG.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.Kinect.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.VFW.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.Ximea.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Vision.xml
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\de\MetriCam.resources.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\en\MetriCam.resources.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csprojResolveAssemblyReference.cache
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Form1.resources
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Properties.Resources.resources
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csproj.GenerateResource.Cache
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Controls.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.DebuggerVisualizers (2010).dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Fuzzy.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Genetic.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Imaging.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Imaging.Formats.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Imaging.IPPrototyper.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.MachineLearning.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Math.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Neuro.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Robotics.Lego.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Robotics.Surveyor.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Robotics.TeRK.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.DirectShow.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.FFMPEG.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.Kinect.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.VFW.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Video.Ximea.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\AForge.Vision.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\IPPrototyper.exe
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\MesaCamera.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\MetriCam.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\MetriCam.resources.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\MetriCamSDK.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\O3DCamera.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\PMDCamera.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\PrimeSense.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\WebCam.dll
+P:\pCloud Sync\politeh\master\VideoCam\VideoApp\bin\Debug\XmlRpc.dll
+C:\Projects\test\VideoCam\VideoApp\obj\x86\Debug\VideoApp.exe
+C:\Projects\test\VideoCam\VideoApp\obj\x86\Debug\VideoApp.pdb
+C:\Projects\VideoCam\VideoApp\obj\x86\Debug\VideoApp.exe
+C:\Projects\VideoCam\VideoApp\obj\x86\Debug\VideoApp.pdb
+C:\Projects\VideoCam\VideoApp\bin\Debug\VideoApp.exe
+C:\Projects\VideoCam\VideoApp\bin\Debug\VideoApp.pdb
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Controls.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.DebuggerVisualizers (2010).dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Fuzzy.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Genetic.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Imaging.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Imaging.Formats.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Imaging.IPPrototyper.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.MachineLearning.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Math.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Neuro.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Robotics.Lego.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Robotics.Surveyor.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Robotics.TeRK.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.DirectShow.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.FFMPEG.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.Kinect.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.VFW.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.Ximea.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Vision.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\IPPrototyper.exe
+C:\Projects\VideoCam\VideoApp\bin\Debug\MesaCamera.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\MetriCam.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\MetriCam.resources.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\MetriCamSDK.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\O3DCamera.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\PMDCamera.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\PrimeSense.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\WebCam.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\XmlRpc.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Controls.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Fuzzy.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Genetic.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Imaging.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Imaging.Formats.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.MachineLearning.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Math.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Neuro.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Robotics.Lego.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Robotics.Surveyor.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Robotics.TeRK.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.DirectShow.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.FFMPEG.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.Kinect.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.VFW.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Video.Ximea.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\AForge.Vision.xml
+C:\Projects\VideoCam\VideoApp\bin\Debug\de\MetriCam.resources.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\en\MetriCam.resources.dll
+C:\Projects\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csprojResolveAssemblyReference.cache
+C:\Projects\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Form1.resources
+C:\Projects\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Properties.Resources.resources
+C:\Projects\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csproj.GenerateResource.Cache

@@ -79,12 +79,16 @@
             this.textBoxDeviation = new System.Windows.Forms.TextBox();
             this.lblDeviation = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnRotatedMinus2 = new System.Windows.Forms.Button();
             this.buttonRotatedPlus3 = new System.Windows.Forms.Button();
+            this.btnRotatedMinus2 = new System.Windows.Forms.Button();
             this.pictureBoxCandidateTest = new System.Windows.Forms.PictureBox();
             this.pictureBoxTest = new System.Windows.Forms.PictureBox();
             this.pictureBoxCamera = new System.Windows.Forms.PictureBox();
-            this.textBoxPixelsTres = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.panelUnused.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -92,13 +96,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCandidateTest)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTest)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCamera)).BeginInit();
+            this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnGetFromTxt
             // 
-            this.btnGetFromTxt.Location = new System.Drawing.Point(94, 48);
+            this.btnGetFromTxt.Location = new System.Drawing.Point(125, 59);
+            this.btnGetFromTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnGetFromTxt.Name = "btnGetFromTxt";
-            this.btnGetFromTxt.Size = new System.Drawing.Size(75, 35);
+            this.btnGetFromTxt.Size = new System.Drawing.Size(100, 43);
             this.btnGetFromTxt.TabIndex = 1;
             this.btnGetFromTxt.Text = "Get image from txt";
             this.btnGetFromTxt.UseVisualStyleBackColor = true;
@@ -112,9 +120,10 @@
             // 
             // btnMakePhoto
             // 
-            this.btnMakePhoto.Location = new System.Drawing.Point(12, 530);
+            this.btnMakePhoto.Location = new System.Drawing.Point(8, 57);
+            this.btnMakePhoto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMakePhoto.Name = "btnMakePhoto";
-            this.btnMakePhoto.Size = new System.Drawing.Size(99, 34);
+            this.btnMakePhoto.Size = new System.Drawing.Size(132, 36);
             this.btnMakePhoto.TabIndex = 2;
             this.btnMakePhoto.Text = "Make photo";
             this.btnMakePhoto.UseVisualStyleBackColor = true;
@@ -122,9 +131,10 @@
             // 
             // btnConnectCamera
             // 
-            this.btnConnectCamera.Location = new System.Drawing.Point(12, 495);
+            this.btnConnectCamera.Location = new System.Drawing.Point(9, 11);
+            this.btnConnectCamera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnConnectCamera.Name = "btnConnectCamera";
-            this.btnConnectCamera.Size = new System.Drawing.Size(99, 34);
+            this.btnConnectCamera.Size = new System.Drawing.Size(132, 42);
             this.btnConnectCamera.TabIndex = 3;
             this.btnConnectCamera.Text = "Connect camera";
             this.btnConnectCamera.UseVisualStyleBackColor = true;
@@ -132,9 +142,10 @@
             // 
             // btnSaveToTxt
             // 
-            this.btnSaveToTxt.Location = new System.Drawing.Point(94, 8);
+            this.btnSaveToTxt.Location = new System.Drawing.Point(125, 10);
+            this.btnSaveToTxt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSaveToTxt.Name = "btnSaveToTxt";
-            this.btnSaveToTxt.Size = new System.Drawing.Size(74, 36);
+            this.btnSaveToTxt.Size = new System.Drawing.Size(99, 44);
             this.btnSaveToTxt.TabIndex = 4;
             this.btnSaveToTxt.Text = "Save image to txt";
             this.btnSaveToTxt.UseVisualStyleBackColor = true;
@@ -142,9 +153,10 @@
             // 
             // btnResize
             // 
-            this.btnResize.Location = new System.Drawing.Point(6, 8);
+            this.btnResize.Location = new System.Drawing.Point(8, 10);
+            this.btnResize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnResize.Name = "btnResize";
-            this.btnResize.Size = new System.Drawing.Size(82, 33);
+            this.btnResize.Size = new System.Drawing.Size(109, 41);
             this.btnResize.TabIndex = 5;
             this.btnResize.Text = "Resize image";
             this.btnResize.UseVisualStyleBackColor = true;
@@ -153,42 +165,47 @@
             // labelWidth
             // 
             this.labelWidth.AutoSize = true;
-            this.labelWidth.Location = new System.Drawing.Point(3, 45);
+            this.labelWidth.Location = new System.Drawing.Point(4, 55);
+            this.labelWidth.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelWidth.Name = "labelWidth";
-            this.labelWidth.Size = new System.Drawing.Size(60, 13);
+            this.labelWidth.Size = new System.Drawing.Size(75, 17);
             this.labelWidth.TabIndex = 6;
             this.labelWidth.Text = "New width:";
             // 
             // labelHeight
             // 
             this.labelHeight.AutoSize = true;
-            this.labelHeight.Location = new System.Drawing.Point(3, 86);
+            this.labelHeight.Location = new System.Drawing.Point(4, 106);
+            this.labelHeight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelHeight.Name = "labelHeight";
-            this.labelHeight.Size = new System.Drawing.Size(64, 13);
+            this.labelHeight.Size = new System.Drawing.Size(82, 17);
             this.labelHeight.TabIndex = 7;
             this.labelHeight.Text = "New height:";
             // 
             // textWidth
             // 
-            this.textWidth.Location = new System.Drawing.Point(6, 63);
+            this.textWidth.Location = new System.Drawing.Point(8, 78);
+            this.textWidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textWidth.Name = "textWidth";
-            this.textWidth.Size = new System.Drawing.Size(57, 20);
+            this.textWidth.Size = new System.Drawing.Size(75, 22);
             this.textWidth.TabIndex = 8;
             this.textWidth.Text = "300";
             // 
             // textHeight
             // 
-            this.textHeight.Location = new System.Drawing.Point(6, 103);
+            this.textHeight.Location = new System.Drawing.Point(8, 127);
+            this.textHeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textHeight.Name = "textHeight";
-            this.textHeight.Size = new System.Drawing.Size(57, 20);
+            this.textHeight.Size = new System.Drawing.Size(75, 22);
             this.textHeight.TabIndex = 9;
             this.textHeight.Text = "300";
             // 
             // btnAffineTranslate
             // 
-            this.btnAffineTranslate.Location = new System.Drawing.Point(568, 499);
+            this.btnAffineTranslate.Location = new System.Drawing.Point(113, 4);
+            this.btnAffineTranslate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAffineTranslate.Name = "btnAffineTranslate";
-            this.btnAffineTranslate.Size = new System.Drawing.Size(86, 32);
+            this.btnAffineTranslate.Size = new System.Drawing.Size(115, 39);
             this.btnAffineTranslate.TabIndex = 14;
             this.btnAffineTranslate.Text = "Affine translate";
             this.btnAffineTranslate.UseVisualStyleBackColor = true;
@@ -197,42 +214,47 @@
             // lblTranslateX
             // 
             this.lblTranslateX.AutoSize = true;
-            this.lblTranslateX.Location = new System.Drawing.Point(564, 534);
+            this.lblTranslateX.Location = new System.Drawing.Point(108, 47);
+            this.lblTranslateX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTranslateX.Name = "lblTranslateX";
-            this.lblTranslateX.Size = new System.Drawing.Size(61, 13);
+            this.lblTranslateX.Size = new System.Drawing.Size(81, 17);
             this.lblTranslateX.TabIndex = 15;
             this.lblTranslateX.Text = "Translate X";
             // 
             // txtTranslateX
             // 
-            this.txtTranslateX.Location = new System.Drawing.Point(567, 553);
+            this.txtTranslateX.Location = new System.Drawing.Point(112, 70);
+            this.txtTranslateX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtTranslateX.Name = "txtTranslateX";
-            this.txtTranslateX.Size = new System.Drawing.Size(83, 20);
+            this.txtTranslateX.Size = new System.Drawing.Size(109, 22);
             this.txtTranslateX.TabIndex = 16;
             this.txtTranslateX.Text = "100";
             // 
             // txtTranslateY
             // 
-            this.txtTranslateY.Location = new System.Drawing.Point(567, 593);
+            this.txtTranslateY.Location = new System.Drawing.Point(112, 119);
+            this.txtTranslateY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtTranslateY.Name = "txtTranslateY";
-            this.txtTranslateY.Size = new System.Drawing.Size(83, 20);
+            this.txtTranslateY.Size = new System.Drawing.Size(109, 22);
             this.txtTranslateY.TabIndex = 18;
             this.txtTranslateY.Text = "100";
             // 
             // lblTranslateY
             // 
             this.lblTranslateY.AutoSize = true;
-            this.lblTranslateY.Location = new System.Drawing.Point(565, 575);
+            this.lblTranslateY.Location = new System.Drawing.Point(109, 97);
+            this.lblTranslateY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTranslateY.Name = "lblTranslateY";
-            this.lblTranslateY.Size = new System.Drawing.Size(61, 13);
+            this.lblTranslateY.Size = new System.Drawing.Size(81, 17);
             this.lblTranslateY.TabIndex = 17;
             this.lblTranslateY.Text = "Translate Y";
             // 
             // btnAffineRotate
             // 
-            this.btnAffineRotate.Location = new System.Drawing.Point(177, 8);
+            this.btnAffineRotate.Location = new System.Drawing.Point(236, 10);
+            this.btnAffineRotate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAffineRotate.Name = "btnAffineRotate";
-            this.btnAffineRotate.Size = new System.Drawing.Size(75, 33);
+            this.btnAffineRotate.Size = new System.Drawing.Size(100, 41);
             this.btnAffineRotate.TabIndex = 19;
             this.btnAffineRotate.Text = "Affine rotate";
             this.btnAffineRotate.UseVisualStyleBackColor = true;
@@ -240,9 +262,10 @@
             // 
             // btnAffineScale
             // 
-            this.btnAffineScale.Location = new System.Drawing.Point(486, 499);
+            this.btnAffineScale.Location = new System.Drawing.Point(4, 4);
+            this.btnAffineScale.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAffineScale.Name = "btnAffineScale";
-            this.btnAffineScale.Size = new System.Drawing.Size(75, 32);
+            this.btnAffineScale.Size = new System.Drawing.Size(100, 39);
             this.btnAffineScale.TabIndex = 20;
             this.btnAffineScale.Text = "Affine scale";
             this.btnAffineScale.UseVisualStyleBackColor = true;
@@ -251,42 +274,47 @@
             // lblScaleX
             // 
             this.lblScaleX.AutoSize = true;
-            this.lblScaleX.Location = new System.Drawing.Point(486, 534);
+            this.lblScaleX.Location = new System.Drawing.Point(4, 47);
+            this.lblScaleX.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblScaleX.Name = "lblScaleX";
-            this.lblScaleX.Size = new System.Drawing.Size(44, 13);
+            this.lblScaleX.Size = new System.Drawing.Size(56, 17);
             this.lblScaleX.TabIndex = 21;
             this.lblScaleX.Text = "Scale X";
             // 
             // txtScaleX
             // 
-            this.txtScaleX.Location = new System.Drawing.Point(489, 551);
+            this.txtScaleX.Location = new System.Drawing.Point(8, 68);
+            this.txtScaleX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtScaleX.Name = "txtScaleX";
-            this.txtScaleX.Size = new System.Drawing.Size(72, 20);
+            this.txtScaleX.Size = new System.Drawing.Size(95, 22);
             this.txtScaleX.TabIndex = 22;
             this.txtScaleX.Text = "2";
             // 
             // txtScaleY
             // 
-            this.txtScaleY.Location = new System.Drawing.Point(489, 593);
+            this.txtScaleY.Location = new System.Drawing.Point(8, 119);
+            this.txtScaleY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtScaleY.Name = "txtScaleY";
-            this.txtScaleY.Size = new System.Drawing.Size(72, 20);
+            this.txtScaleY.Size = new System.Drawing.Size(95, 22);
             this.txtScaleY.TabIndex = 24;
             this.txtScaleY.Text = "2";
             // 
             // lblScaleY
             // 
             this.lblScaleY.AutoSize = true;
-            this.lblScaleY.Location = new System.Drawing.Point(486, 576);
+            this.lblScaleY.Location = new System.Drawing.Point(4, 98);
+            this.lblScaleY.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblScaleY.Name = "lblScaleY";
-            this.lblScaleY.Size = new System.Drawing.Size(44, 13);
+            this.lblScaleY.Size = new System.Drawing.Size(56, 17);
             this.lblScaleY.TabIndex = 23;
             this.lblScaleY.Text = "Scale Y";
             // 
             // btnSimpleBinarize
             // 
-            this.btnSimpleBinarize.Location = new System.Drawing.Point(133, 498);
+            this.btnSimpleBinarize.Location = new System.Drawing.Point(149, 11);
+            this.btnSimpleBinarize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSimpleBinarize.Name = "btnSimpleBinarize";
-            this.btnSimpleBinarize.Size = new System.Drawing.Size(75, 25);
+            this.btnSimpleBinarize.Size = new System.Drawing.Size(100, 31);
             this.btnSimpleBinarize.TabIndex = 25;
             this.btnSimpleBinarize.Text = "Binarize";
             this.btnSimpleBinarize.UseVisualStyleBackColor = true;
@@ -294,9 +322,10 @@
             // 
             // btnNiblack
             // 
-            this.btnNiblack.Location = new System.Drawing.Point(214, 499);
+            this.btnNiblack.Location = new System.Drawing.Point(257, 12);
+            this.btnNiblack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnNiblack.Name = "btnNiblack";
-            this.btnNiblack.Size = new System.Drawing.Size(75, 22);
+            this.btnNiblack.Size = new System.Drawing.Size(100, 30);
             this.btnNiblack.TabIndex = 26;
             this.btnNiblack.Text = "Niblack";
             this.btnNiblack.UseVisualStyleBackColor = true;
@@ -304,9 +333,10 @@
             // 
             // btnOtsu
             // 
-            this.btnOtsu.Location = new System.Drawing.Point(295, 499);
+            this.btnOtsu.Location = new System.Drawing.Point(365, 12);
+            this.btnOtsu.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnOtsu.Name = "btnOtsu";
-            this.btnOtsu.Size = new System.Drawing.Size(75, 23);
+            this.btnOtsu.Size = new System.Drawing.Size(100, 28);
             this.btnOtsu.TabIndex = 29;
             this.btnOtsu.Text = "Otsu";
             this.btnOtsu.UseVisualStyleBackColor = true;
@@ -314,9 +344,10 @@
             // 
             // btnGraysclae
             // 
-            this.btnGraysclae.Location = new System.Drawing.Point(396, 498);
+            this.btnGraysclae.Location = new System.Drawing.Point(4, 43);
+            this.btnGraysclae.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnGraysclae.Name = "btnGraysclae";
-            this.btnGraysclae.Size = new System.Drawing.Size(84, 33);
+            this.btnGraysclae.Size = new System.Drawing.Size(100, 36);
             this.btnGraysclae.TabIndex = 30;
             this.btnGraysclae.Text = "Grayscale";
             this.btnGraysclae.UseVisualStyleBackColor = true;
@@ -324,9 +355,10 @@
             // 
             // btnYen
             // 
-            this.btnYen.Location = new System.Drawing.Point(295, 523);
+            this.btnYen.Location = new System.Drawing.Point(365, 48);
+            this.btnYen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnYen.Name = "btnYen";
-            this.btnYen.Size = new System.Drawing.Size(75, 23);
+            this.btnYen.Size = new System.Drawing.Size(100, 28);
             this.btnYen.TabIndex = 31;
             this.btnYen.Text = "Yen";
             this.btnYen.UseVisualStyleBackColor = true;
@@ -334,9 +366,10 @@
             // 
             // btnTriangle
             // 
-            this.btnTriangle.Location = new System.Drawing.Point(295, 549);
+            this.btnTriangle.Location = new System.Drawing.Point(365, 84);
+            this.btnTriangle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnTriangle.Name = "btnTriangle";
-            this.btnTriangle.Size = new System.Drawing.Size(75, 23);
+            this.btnTriangle.Size = new System.Drawing.Size(100, 28);
             this.btnTriangle.TabIndex = 33;
             this.btnTriangle.Text = "Triangle";
             this.btnTriangle.UseVisualStyleBackColor = true;
@@ -344,9 +377,10 @@
             // 
             // btnToDefaultImage
             // 
-            this.btnToDefaultImage.Location = new System.Drawing.Point(12, 565);
+            this.btnToDefaultImage.Location = new System.Drawing.Point(8, 100);
+            this.btnToDefaultImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnToDefaultImage.Name = "btnToDefaultImage";
-            this.btnToDefaultImage.Size = new System.Drawing.Size(99, 33);
+            this.btnToDefaultImage.Size = new System.Drawing.Size(132, 41);
             this.btnToDefaultImage.TabIndex = 34;
             this.btnToDefaultImage.Text = "Set default image";
             this.btnToDefaultImage.UseVisualStyleBackColor = true;
@@ -363,50 +397,56 @@
             this.panelUnused.Controls.Add(this.textWidth);
             this.panelUnused.Controls.Add(this.textHeight);
             this.panelUnused.Controls.Add(this.btnAffineRotate);
-            this.panelUnused.Location = new System.Drawing.Point(810, 499);
+            this.panelUnused.Location = new System.Drawing.Point(1203, 15);
+            this.panelUnused.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelUnused.Name = "panelUnused";
-            this.panelUnused.Size = new System.Drawing.Size(257, 130);
+            this.panelUnused.Size = new System.Drawing.Size(342, 160);
             this.panelUnused.TabIndex = 35;
             // 
             // lblSimpleBinarizeTreshold
             // 
             this.lblSimpleBinarizeTreshold.AutoSize = true;
-            this.lblSimpleBinarizeTreshold.Location = new System.Drawing.Point(132, 526);
+            this.lblSimpleBinarizeTreshold.Location = new System.Drawing.Point(148, 46);
+            this.lblSimpleBinarizeTreshold.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSimpleBinarizeTreshold.Name = "lblSimpleBinarizeTreshold";
-            this.lblSimpleBinarizeTreshold.Size = new System.Drawing.Size(51, 13);
+            this.lblSimpleBinarizeTreshold.Size = new System.Drawing.Size(68, 17);
             this.lblSimpleBinarizeTreshold.TabIndex = 36;
             this.lblSimpleBinarizeTreshold.Text = "Treshold:";
             // 
             // textBoxSimpleBinTreshold
             // 
-            this.textBoxSimpleBinTreshold.Location = new System.Drawing.Point(135, 545);
+            this.textBoxSimpleBinTreshold.Location = new System.Drawing.Point(152, 69);
+            this.textBoxSimpleBinTreshold.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxSimpleBinTreshold.Name = "textBoxSimpleBinTreshold";
-            this.textBoxSimpleBinTreshold.Size = new System.Drawing.Size(73, 20);
+            this.textBoxSimpleBinTreshold.Size = new System.Drawing.Size(96, 22);
             this.textBoxSimpleBinTreshold.TabIndex = 37;
             this.textBoxSimpleBinTreshold.Text = "127";
             // 
             // lblNiblackStep
             // 
             this.lblNiblackStep.AutoSize = true;
-            this.lblNiblackStep.Location = new System.Drawing.Point(213, 526);
+            this.lblNiblackStep.Location = new System.Drawing.Point(256, 46);
+            this.lblNiblackStep.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNiblackStep.Name = "lblNiblackStep";
-            this.lblNiblackStep.Size = new System.Drawing.Size(32, 13);
+            this.lblNiblackStep.Size = new System.Drawing.Size(41, 17);
             this.lblNiblackStep.TabIndex = 38;
             this.lblNiblackStep.Text = "Step:";
             // 
             // textBoxNiblackStep
             // 
-            this.textBoxNiblackStep.Location = new System.Drawing.Point(216, 545);
+            this.textBoxNiblackStep.Location = new System.Drawing.Point(260, 69);
+            this.textBoxNiblackStep.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxNiblackStep.Name = "textBoxNiblackStep";
-            this.textBoxNiblackStep.Size = new System.Drawing.Size(73, 20);
+            this.textBoxNiblackStep.Size = new System.Drawing.Size(96, 22);
             this.textBoxNiblackStep.TabIndex = 39;
             this.textBoxNiblackStep.Text = "15";
             // 
             // btnMedianFilter
             // 
-            this.btnMedianFilter.Location = new System.Drawing.Point(3, 3);
+            this.btnMedianFilter.Location = new System.Drawing.Point(4, 4);
+            this.btnMedianFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMedianFilter.Name = "btnMedianFilter";
-            this.btnMedianFilter.Size = new System.Drawing.Size(75, 23);
+            this.btnMedianFilter.Size = new System.Drawing.Size(100, 28);
             this.btnMedianFilter.TabIndex = 40;
             this.btnMedianFilter.Text = "Median filter";
             this.btnMedianFilter.UseVisualStyleBackColor = true;
@@ -418,33 +458,37 @@
             this.panel1.Controls.Add(this.textBoxMedianFilterStep);
             this.panel1.Controls.Add(this.lblStep);
             this.panel1.Controls.Add(this.btnMedianFilter);
-            this.panel1.Location = new System.Drawing.Point(396, 537);
+            this.panel1.Location = new System.Drawing.Point(832, 330);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(84, 76);
+            this.panel1.Size = new System.Drawing.Size(111, 93);
             this.panel1.TabIndex = 41;
             // 
             // textBoxMedianFilterStep
             // 
-            this.textBoxMedianFilterStep.Location = new System.Drawing.Point(7, 50);
+            this.textBoxMedianFilterStep.Location = new System.Drawing.Point(9, 62);
+            this.textBoxMedianFilterStep.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxMedianFilterStep.Name = "textBoxMedianFilterStep";
-            this.textBoxMedianFilterStep.Size = new System.Drawing.Size(71, 20);
+            this.textBoxMedianFilterStep.Size = new System.Drawing.Size(93, 22);
             this.textBoxMedianFilterStep.TabIndex = 42;
             this.textBoxMedianFilterStep.Text = "3";
             // 
             // lblStep
             // 
             this.lblStep.AutoSize = true;
-            this.lblStep.Location = new System.Drawing.Point(4, 33);
+            this.lblStep.Location = new System.Drawing.Point(5, 41);
+            this.lblStep.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStep.Name = "lblStep";
-            this.lblStep.Size = new System.Drawing.Size(32, 13);
+            this.lblStep.Size = new System.Drawing.Size(41, 17);
             this.lblStep.TabIndex = 41;
             this.lblStep.Text = "Step:";
             // 
             // btnNPixelsFilter
             // 
-            this.btnNPixelsFilter.Location = new System.Drawing.Point(3, 3);
+            this.btnNPixelsFilter.Location = new System.Drawing.Point(4, 4);
+            this.btnNPixelsFilter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnNPixelsFilter.Name = "btnNPixelsFilter";
-            this.btnNPixelsFilter.Size = new System.Drawing.Size(76, 26);
+            this.btnNPixelsFilter.Size = new System.Drawing.Size(101, 32);
             this.btnNPixelsFilter.TabIndex = 42;
             this.btnNPixelsFilter.Text = "N pixels filter";
             this.btnNPixelsFilter.UseVisualStyleBackColor = true;
@@ -453,17 +497,19 @@
             // lblN
             // 
             this.lblN.AutoSize = true;
-            this.lblN.Location = new System.Drawing.Point(3, 39);
+            this.lblN.Location = new System.Drawing.Point(4, 43);
+            this.lblN.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblN.Name = "lblN";
-            this.lblN.Size = new System.Drawing.Size(18, 13);
+            this.lblN.Size = new System.Drawing.Size(22, 17);
             this.lblN.TabIndex = 43;
             this.lblN.Text = "N:";
             // 
             // textBoxNPixels
             // 
-            this.textBoxNPixels.Location = new System.Drawing.Point(23, 36);
+            this.textBoxNPixels.Location = new System.Drawing.Point(8, 62);
+            this.textBoxNPixels.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxNPixels.Name = "textBoxNPixels";
-            this.textBoxNPixels.Size = new System.Drawing.Size(55, 20);
+            this.textBoxNPixels.Size = new System.Drawing.Size(96, 22);
             this.textBoxNPixels.TabIndex = 44;
             this.textBoxNPixels.Text = "2";
             // 
@@ -473,42 +519,47 @@
             this.panel2.Controls.Add(this.btnNPixelsFilter);
             this.panel2.Controls.Add(this.textBoxNPixels);
             this.panel2.Controls.Add(this.lblN);
-            this.panel2.Location = new System.Drawing.Point(396, 619);
+            this.panel2.Location = new System.Drawing.Point(712, 330);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(84, 62);
+            this.panel2.Size = new System.Drawing.Size(111, 92);
             this.panel2.TabIndex = 45;
             // 
             // btnRecognize
             // 
-            this.btnRecognize.Location = new System.Drawing.Point(13, 625);
+            this.btnRecognize.Location = new System.Drawing.Point(4, 9);
+            this.btnRecognize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRecognize.Name = "btnRecognize";
-            this.btnRecognize.Size = new System.Drawing.Size(75, 23);
+            this.btnRecognize.Size = new System.Drawing.Size(171, 44);
             this.btnRecognize.TabIndex = 46;
-            this.btnRecognize.Text = "Recognize";
+            this.btnRecognize.Text = "Recognize etalon";
             this.btnRecognize.UseVisualStyleBackColor = true;
             this.btnRecognize.Click += new System.EventHandler(this.btnRecognize_Click);
             // 
             // lblClassName
             // 
             this.lblClassName.AutoSize = true;
-            this.lblClassName.Location = new System.Drawing.Point(692, 499);
+            this.lblClassName.Location = new System.Drawing.Point(173, 9);
+            this.lblClassName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblClassName.Name = "lblClassName";
-            this.lblClassName.Size = new System.Drawing.Size(64, 13);
+            this.lblClassName.Size = new System.Drawing.Size(85, 17);
             this.lblClassName.TabIndex = 47;
             this.lblClassName.Text = "Class name:";
             // 
             // textBoxClassName
             // 
-            this.textBoxClassName.Location = new System.Drawing.Point(695, 516);
+            this.textBoxClassName.Location = new System.Drawing.Point(177, 28);
+            this.textBoxClassName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxClassName.Name = "textBoxClassName";
-            this.textBoxClassName.Size = new System.Drawing.Size(91, 20);
+            this.textBoxClassName.Size = new System.Drawing.Size(107, 22);
             this.textBoxClassName.TabIndex = 48;
             // 
             // btnSetClass
             // 
-            this.btnSetClass.Location = new System.Drawing.Point(695, 540);
+            this.btnSetClass.Location = new System.Drawing.Point(177, 60);
+            this.btnSetClass.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSetClass.Name = "btnSetClass";
-            this.btnSetClass.Size = new System.Drawing.Size(75, 23);
+            this.btnSetClass.Size = new System.Drawing.Size(108, 31);
             this.btnSetClass.TabIndex = 49;
             this.btnSetClass.Text = "Set class";
             this.btnSetClass.UseVisualStyleBackColor = true;
@@ -516,9 +567,10 @@
             // 
             // btnRecognizeCandidate
             // 
-            this.btnRecognizeCandidate.Location = new System.Drawing.Point(13, 656);
+            this.btnRecognizeCandidate.Location = new System.Drawing.Point(4, 60);
+            this.btnRecognizeCandidate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRecognizeCandidate.Name = "btnRecognizeCandidate";
-            this.btnRecognizeCandidate.Size = new System.Drawing.Size(125, 26);
+            this.btnRecognizeCandidate.Size = new System.Drawing.Size(171, 32);
             this.btnRecognizeCandidate.TabIndex = 50;
             this.btnRecognizeCandidate.Text = "Recognize candidate";
             this.btnRecognizeCandidate.UseVisualStyleBackColor = true;
@@ -526,9 +578,10 @@
             // 
             // btnMSE
             // 
-            this.btnMSE.Location = new System.Drawing.Point(144, 656);
+            this.btnMSE.Location = new System.Drawing.Point(293, 60);
+            this.btnMSE.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMSE.Name = "btnMSE";
-            this.btnMSE.Size = new System.Drawing.Size(75, 26);
+            this.btnMSE.Size = new System.Drawing.Size(133, 32);
             this.btnMSE.TabIndex = 52;
             this.btnMSE.Text = "MSE";
             this.btnMSE.UseVisualStyleBackColor = true;
@@ -536,9 +589,10 @@
             // 
             // btnSetImage1
             // 
-            this.btnSetImage1.Location = new System.Drawing.Point(3, 6);
+            this.btnSetImage1.Location = new System.Drawing.Point(4, 7);
+            this.btnSetImage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSetImage1.Name = "btnSetImage1";
-            this.btnSetImage1.Size = new System.Drawing.Size(75, 23);
+            this.btnSetImage1.Size = new System.Drawing.Size(100, 28);
             this.btnSetImage1.TabIndex = 53;
             this.btnSetImage1.Text = "Rotated + 1";
             this.btnSetImage1.UseVisualStyleBackColor = true;
@@ -546,19 +600,22 @@
             // 
             // textBoxDeviation
             // 
-            this.textBoxDeviation.Location = new System.Drawing.Point(810, 659);
+            this.textBoxDeviation.Location = new System.Drawing.Point(293, 28);
+            this.textBoxDeviation.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxDeviation.Name = "textBoxDeviation";
-            this.textBoxDeviation.Size = new System.Drawing.Size(100, 20);
+            this.textBoxDeviation.Size = new System.Drawing.Size(132, 22);
             this.textBoxDeviation.TabIndex = 54;
             // 
             // lblDeviation
             // 
             this.lblDeviation.AutoSize = true;
-            this.lblDeviation.Location = new System.Drawing.Point(807, 643);
+            this.lblDeviation.Location = new System.Drawing.Point(289, 7);
+            this.lblDeviation.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDeviation.Name = "lblDeviation";
-            this.lblDeviation.Size = new System.Drawing.Size(55, 13);
+            this.lblDeviation.Size = new System.Drawing.Size(71, 17);
             this.lblDeviation.TabIndex = 55;
             this.lblDeviation.Text = "Deviation:";
+            this.lblDeviation.Click += new System.EventHandler(this.lblDeviation_Click);
             // 
             // panel3
             // 
@@ -566,115 +623,172 @@
             this.panel3.Controls.Add(this.buttonRotatedPlus3);
             this.panel3.Controls.Add(this.btnRotatedMinus2);
             this.panel3.Controls.Add(this.btnSetImage1);
-            this.panel3.Location = new System.Drawing.Point(1074, 498);
+            this.panel3.Controls.Add(this.btnGraysclae);
+            this.panel3.Location = new System.Drawing.Point(1203, 182);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(255, 131);
+            this.panel3.Size = new System.Drawing.Size(342, 121);
             this.panel3.TabIndex = 56;
-            // 
-            // btnRotatedMinus2
-            // 
-            this.btnRotatedMinus2.Location = new System.Drawing.Point(84, 6);
-            this.btnRotatedMinus2.Name = "btnRotatedMinus2";
-            this.btnRotatedMinus2.Size = new System.Drawing.Size(75, 23);
-            this.btnRotatedMinus2.TabIndex = 54;
-            this.btnRotatedMinus2.Text = "Rotated + 2";
-            this.btnRotatedMinus2.UseVisualStyleBackColor = true;
-            this.btnRotatedMinus2.Click += new System.EventHandler(this.btnRotatedMinus2_Click);
             // 
             // buttonRotatedPlus3
             // 
-            this.buttonRotatedPlus3.Location = new System.Drawing.Point(165, 7);
+            this.buttonRotatedPlus3.Location = new System.Drawing.Point(220, 9);
+            this.buttonRotatedPlus3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonRotatedPlus3.Name = "buttonRotatedPlus3";
-            this.buttonRotatedPlus3.Size = new System.Drawing.Size(75, 23);
+            this.buttonRotatedPlus3.Size = new System.Drawing.Size(100, 28);
             this.buttonRotatedPlus3.TabIndex = 55;
             this.buttonRotatedPlus3.Text = "Rotated + 3";
             this.buttonRotatedPlus3.UseVisualStyleBackColor = true;
             this.buttonRotatedPlus3.Click += new System.EventHandler(this.buttonRotatedPlus3_Click);
             // 
+            // btnRotatedMinus2
+            // 
+            this.btnRotatedMinus2.Location = new System.Drawing.Point(112, 7);
+            this.btnRotatedMinus2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRotatedMinus2.Name = "btnRotatedMinus2";
+            this.btnRotatedMinus2.Size = new System.Drawing.Size(100, 28);
+            this.btnRotatedMinus2.TabIndex = 54;
+            this.btnRotatedMinus2.Text = "Rotated + 2";
+            this.btnRotatedMinus2.UseVisualStyleBackColor = true;
+            this.btnRotatedMinus2.Click += new System.EventHandler(this.btnRotatedMinus2_Click);
+            // 
             // pictureBoxCandidateTest
             // 
-            this.pictureBoxCandidateTest.Location = new System.Drawing.Point(668, 257);
+            this.pictureBoxCandidateTest.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxCandidateTest.Location = new System.Drawing.Point(20, 418);
+            this.pictureBoxCandidateTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBoxCandidateTest.Name = "pictureBoxCandidateTest";
-            this.pictureBoxCandidateTest.Size = new System.Drawing.Size(640, 235);
+            this.pictureBoxCandidateTest.Size = new System.Drawing.Size(678, 71);
             this.pictureBoxCandidateTest.TabIndex = 51;
             this.pictureBoxCandidateTest.TabStop = false;
             // 
             // pictureBoxTest
             // 
-            this.pictureBoxTest.Location = new System.Drawing.Point(668, 12);
+            this.pictureBoxTest.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxTest.Location = new System.Drawing.Point(19, 330);
+            this.pictureBoxTest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBoxTest.Name = "pictureBoxTest";
-            this.pictureBoxTest.Size = new System.Drawing.Size(640, 239);
+            this.pictureBoxTest.Size = new System.Drawing.Size(679, 64);
             this.pictureBoxTest.TabIndex = 10;
             this.pictureBoxTest.TabStop = false;
             this.pictureBoxTest.Click += new System.EventHandler(this.pictureBoxTest_Click);
             // 
             // pictureBoxCamera
             // 
+            this.pictureBoxCamera.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBoxCamera.Image = global::VideoApp.Properties.Resources.digits;
-            this.pictureBoxCamera.Location = new System.Drawing.Point(12, 12);
+            this.pictureBoxCamera.Location = new System.Drawing.Point(16, 15);
+            this.pictureBoxCamera.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBoxCamera.Name = "pictureBoxCamera";
-            this.pictureBoxCamera.Size = new System.Drawing.Size(640, 480);
+            this.pictureBoxCamera.Size = new System.Drawing.Size(682, 289);
             this.pictureBoxCamera.TabIndex = 0;
             this.pictureBoxCamera.TabStop = false;
+            this.pictureBoxCamera.Click += new System.EventHandler(this.pictureBoxCamera_Click);
             this.pictureBoxCamera.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxCamera_Paint);
             this.pictureBoxCamera.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseDown);
             this.pictureBoxCamera.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseMove);
             this.pictureBoxCamera.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseUp);
             // 
-            // textBoxPixelsTres
+            // label1
             // 
-            this.textBoxPixelsTres.Location = new System.Drawing.Point(486, 656);
-            this.textBoxPixelsTres.Name = "textBoxPixelsTres";
-            this.textBoxPixelsTres.Size = new System.Drawing.Size(54, 20);
-            this.textBoxPixelsTres.TabIndex = 57;
-            this.textBoxPixelsTres.Text = "3";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 400);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(153, 17);
+            this.label1.TabIndex = 58;
+            this.label1.Text = "Candidate recognizing:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 309);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(129, 17);
+            this.label2.TabIndex = 59;
+            this.label2.Text = "Etalon recognizing:";
+            // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.btnAffineScale);
+            this.panel4.Controls.Add(this.btnAffineTranslate);
+            this.panel4.Controls.Add(this.lblTranslateX);
+            this.panel4.Controls.Add(this.txtTranslateX);
+            this.panel4.Controls.Add(this.lblTranslateY);
+            this.panel4.Controls.Add(this.txtTranslateY);
+            this.panel4.Controls.Add(this.lblScaleX);
+            this.panel4.Controls.Add(this.txtScaleX);
+            this.panel4.Controls.Add(this.lblScaleY);
+            this.panel4.Controls.Add(this.txtScaleY);
+            this.panel4.Location = new System.Drawing.Point(1203, 330);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(342, 160);
+            this.panel4.TabIndex = 60;
+            this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
+            // 
+            // panel5
+            // 
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.btnRecognize);
+            this.panel5.Controls.Add(this.btnRecognizeCandidate);
+            this.panel5.Controls.Add(this.btnMSE);
+            this.panel5.Controls.Add(this.lblClassName);
+            this.panel5.Controls.Add(this.textBoxClassName);
+            this.panel5.Controls.Add(this.textBoxDeviation);
+            this.panel5.Controls.Add(this.btnSetClass);
+            this.panel5.Controls.Add(this.lblDeviation);
+            this.panel5.Location = new System.Drawing.Point(712, 182);
+            this.panel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(482, 121);
+            this.panel5.TabIndex = 61;
+            // 
+            // panel6
+            // 
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.btnYen);
+            this.panel6.Controls.Add(this.btnMakePhoto);
+            this.panel6.Controls.Add(this.btnConnectCamera);
+            this.panel6.Controls.Add(this.btnSimpleBinarize);
+            this.panel6.Controls.Add(this.btnNiblack);
+            this.panel6.Controls.Add(this.btnOtsu);
+            this.panel6.Controls.Add(this.btnTriangle);
+            this.panel6.Controls.Add(this.btnToDefaultImage);
+            this.panel6.Controls.Add(this.lblSimpleBinarizeTreshold);
+            this.panel6.Controls.Add(this.textBoxNiblackStep);
+            this.panel6.Controls.Add(this.textBoxSimpleBinTreshold);
+            this.panel6.Controls.Add(this.lblNiblackStep);
+            this.panel6.Location = new System.Drawing.Point(712, 15);
+            this.panel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(482, 160);
+            this.panel6.TabIndex = 62;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1341, 695);
-            this.Controls.Add(this.textBoxPixelsTres);
+            this.ClientSize = new System.Drawing.Size(1561, 502);
+            this.Controls.Add(this.panel6);
+            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel3);
-            this.Controls.Add(this.lblDeviation);
-            this.Controls.Add(this.textBoxDeviation);
-            this.Controls.Add(this.btnMSE);
             this.Controls.Add(this.pictureBoxCandidateTest);
-            this.Controls.Add(this.btnRecognizeCandidate);
-            this.Controls.Add(this.btnSetClass);
-            this.Controls.Add(this.textBoxClassName);
-            this.Controls.Add(this.lblClassName);
-            this.Controls.Add(this.btnRecognize);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.textBoxNiblackStep);
-            this.Controls.Add(this.lblNiblackStep);
-            this.Controls.Add(this.textBoxSimpleBinTreshold);
-            this.Controls.Add(this.lblSimpleBinarizeTreshold);
             this.Controls.Add(this.panelUnused);
-            this.Controls.Add(this.btnToDefaultImage);
-            this.Controls.Add(this.btnTriangle);
-            this.Controls.Add(this.btnYen);
-            this.Controls.Add(this.btnGraysclae);
-            this.Controls.Add(this.btnOtsu);
-            this.Controls.Add(this.btnNiblack);
-            this.Controls.Add(this.btnSimpleBinarize);
-            this.Controls.Add(this.txtScaleY);
-            this.Controls.Add(this.lblScaleY);
-            this.Controls.Add(this.txtScaleX);
-            this.Controls.Add(this.lblScaleX);
-            this.Controls.Add(this.btnAffineScale);
-            this.Controls.Add(this.txtTranslateY);
-            this.Controls.Add(this.lblTranslateY);
-            this.Controls.Add(this.txtTranslateX);
-            this.Controls.Add(this.lblTranslateX);
-            this.Controls.Add(this.btnAffineTranslate);
             this.Controls.Add(this.pictureBoxTest);
-            this.Controls.Add(this.btnConnectCamera);
-            this.Controls.Add(this.btnMakePhoto);
             this.Controls.Add(this.pictureBoxCamera);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.panelUnused.ResumeLayout(false);
             this.panelUnused.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -685,6 +799,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCandidateTest)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxTest)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCamera)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -748,7 +868,11 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnRotatedMinus2;
         private System.Windows.Forms.Button buttonRotatedPlus3;
-        private System.Windows.Forms.TextBox textBoxPixelsTres;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel panel6;
     }
 }
 

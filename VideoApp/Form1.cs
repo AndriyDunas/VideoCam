@@ -29,6 +29,10 @@ namespace VideoApp
         private Rectangle Rect = new Rectangle();
         private Brush selectionBrush = new SolidBrush(Color.FromArgb(128, 72, 145, 220));
 
+        Color etalonColor = Color.LimeGreen;
+        Color candidateColor = Color.DarkOrange;
+        Color colorToFillRecognized;
+
         Graphics recGraphics;
         Bitmap recBitmap;
 
@@ -512,6 +516,7 @@ namespace VideoApp
 
         private void btnSimpleBinarize_Click(object sender, EventArgs e)
         {
+            btnSimpleBinarize.BackColor = Color.LightGreen;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
             SimpleBinarize(default_image);
             pictureBoxCamera.Image = default_image;
@@ -589,6 +594,7 @@ namespace VideoApp
 
         private void btnNiblack_Click(object sender, EventArgs e)
         {
+            btnNiblack.BackColor = candidateColor;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
             Bitmap new_image = new Bitmap(default_image);
             Niblack(default_image, new_image);
@@ -661,6 +667,7 @@ namespace VideoApp
 
         private void btnOtsu_Click(object sender, EventArgs e)
         {
+            btnOtsu.BackColor = candidateColor;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
             Otsu(default_image);
             pictureBoxCamera.Image = default_image;
@@ -798,6 +805,7 @@ namespace VideoApp
 
         private void btnYen_Click(object sender, EventArgs e)
         {
+            btnYen.BackColor = candidateColor;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
             Yen(default_image);
             pictureBoxCamera.Image = default_image;
@@ -929,6 +937,7 @@ namespace VideoApp
 
         private void btnTriangle_Click(object sender, EventArgs e)
         {
+            btnTriangle.BackColor = candidateColor;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
             Triangle(default_image);
 
@@ -952,22 +961,6 @@ namespace VideoApp
 
             Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
             sourceBitmap.UnlockBits(sourceData);
-
-            if (grayscale == true)
-            {
-                float rgb = 0;
-                for (int k = 0; k < pixelBuffer.Length; k += 4)
-                {
-                    rgb = pixelBuffer[k] * 0.11f;
-                    rgb += pixelBuffer[k + 1] * 0.59f;
-                    rgb += pixelBuffer[k + 2] * 0.3f;
-
-                    pixelBuffer[k] = (byte)rgb;
-                    pixelBuffer[k + 1] = pixelBuffer[k];
-                    pixelBuffer[k + 2] = pixelBuffer[k];
-                    pixelBuffer[k + 3] = 255;
-                }
-            }
 
             int filterOffset = (matrixSize - 1) / 2;
             int calcOffset = 0;
@@ -1142,7 +1135,7 @@ namespace VideoApp
             //    }
             //}
 
-            int NumberTres = Convert.ToInt32(textBoxPixelsTres.Text);
+            int NumberTres = 3;//Convert.ToInt32(textBoxPixelsTres.Text);
 
             for (int x = w / 2; x < width; x += w)
             {
@@ -1424,7 +1417,7 @@ namespace VideoApp
                                 if (imageMatrix[a][b] == 1)
                                 {
                                     recImageMatrix[a][b] = recognizedElementNumber;
-                                    _image.SetPixel(a, b, Color.DarkOrange);
+                                    _image.SetPixel(a, b, colorToFillRecognized);
                                 }
                         recognizedElementNumber++;
                         DrawRecognized(_image, xmin, xmax, ymin, ymax);
@@ -1441,9 +1434,11 @@ namespace VideoApp
 
         private void btnRecognize_Click(object sender, EventArgs e)
         {
+            colorToFillRecognized = etalonColor;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
             PrepareGraphics(default_image);
             Recognize(default_image);
+            
             defaultWidthOffset = 0;
             
             recGraphics.Dispose();
@@ -1537,9 +1532,10 @@ namespace VideoApp
 
         private void btnRecognizeCandidate_Click(object sender, EventArgs e)
         {
+            colorToFillRecognized = candidateColor;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
             PrepareGraphics(default_image);
-            Recognize(default_image);
+            Recognize(default_image);           
             defaultWidthOffset = 0;
             recGraphics.Dispose();
 
@@ -1645,6 +1641,31 @@ namespace VideoApp
                 backgroundWorker1.CancelAsync();
             }
             pictureBoxCamera.Image = VideoApp.Properties.Resources.digits_rotated_plus_3;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBoxCamera_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblDeviation_Click(object sender, EventArgs e)
+        {
+
         }
 
     }
