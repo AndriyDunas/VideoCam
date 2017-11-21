@@ -479,47 +479,60 @@ namespace VideoApp
             return (uintR + uintG + uintB) / 3;
         }
 
-        private void SegmentImageWithGlobalTreshold(Bitmap _image, int _treshold)
+        private Bitmap SegmentImageWithGlobalTreshold(Bitmap sourceBitmap, int _treshold)
         {
-            imageMatrix = new int[_image.Width][];
+            BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
 
-            for (int i = 0; i < _image.Width; i++)
-            {
-                imageMatrix[i] = new int[_image.Height];
-            }
+            byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
+            byte[] resultBuffer = new byte[sourceData.Stride * sourceData.Height];
 
-            for (int x = 0; x < _image.Width; x++)
+            Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
+            sourceBitmap.UnlockBits(sourceData);
+
+            int byteOffset = 0;
+
+            for (int offsetY = 0; offsetY < sourceBitmap.Height; offsetY++)
             {
-                for (int y = 0; y < _image.Height; ++y)
+                for (int offsetX = 0; offsetX < sourceBitmap.Width; offsetX++)
                 {
-                    int intensityOfPixel = GetIntensityOfPixel(_image, x, y);
-                    if (intensityOfPixel < _treshold)
+                    byteOffset = offsetY * sourceData.Stride + offsetX * 4;
+
+                    Int32 pixelValue = BitConverter.ToInt32(pixelBuffer, byteOffset);
+                    byte[] pixel = BitConverter.GetBytes(pixelValue);
+                    Int32 pixelBright = (pixel[0] + pixel[1] + pixel[2]) / 3;
+
+                    if (pixelBright < _treshold)
                     {
-                        _image.SetPixel(x, y, Color.Black);
-                        imageMatrix[x][y] = 1;
+                        resultBuffer[byteOffset] = 0;
+                        resultBuffer[byteOffset + 1] = 0;
+                        resultBuffer[byteOffset + 2] = 0;
+                        resultBuffer[byteOffset + 3] = 255;
                     }
                     else
                     {
-                        _image.SetPixel(x, y, Color.White);
-                        imageMatrix[x][y] = 0;
+                        resultBuffer[byteOffset] = 255;
+                        resultBuffer[byteOffset + 1] = 255;
+                        resultBuffer[byteOffset + 2] = 255;
+                        resultBuffer[byteOffset + 3] = 255;
                     }
                 }
             }
-        }
 
-        private void SimpleBinarize(Bitmap _image)
-        {
-            int treshold = Convert.ToInt32(textBoxSimpleBinTreshold.Text);
-            SegmentImageWithGlobalTreshold(_image, treshold);
-            pictureBoxCamera.Image = _image;
+            Bitmap resultBitmap = new Bitmap(sourceBitmap.Width, sourceBitmap.Height);
+            BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0, resultBitmap.Width, resultBitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            Marshal.Copy(resultBuffer, 0, resultData.Scan0, resultBuffer.Length);
+            resultBitmap.UnlockBits(resultData);
+
+            return resultBitmap;
         }
 
         private void btnSimpleBinarize_Click(object sender, EventArgs e)
         {
             btnSimpleBinarize.BackColor = Color.LightGreen;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
-            SimpleBinarize(default_image);
-            pictureBoxCamera.Image = default_image;
+            int treshold = Convert.ToInt32(textBoxSimpleBinTreshold.Text);
+            pictureBoxCamera.Image = SegmentImageWithGlobalTreshold(default_image, treshold);
         }
 
         private void Niblack(Bitmap default_image, Bitmap new_image)
@@ -658,19 +671,13 @@ namespace VideoApp
             return treshold;
         }
 
-        private void Otsu(Bitmap default_image)
-        {
-            int[] hist = GetImageHistogram(default_image);
-            int treshold = OtsuTreshold(hist);
-            SegmentImageWithGlobalTreshold(default_image, treshold);
-        }
-
         private void btnOtsu_Click(object sender, EventArgs e)
         {
             btnOtsu.BackColor = candidateColor;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
-            Otsu(default_image);
-            pictureBoxCamera.Image = default_image;
+            int[] hist = GetImageHistogram(default_image);
+            int treshold = OtsuTreshold(hist);
+            pictureBoxCamera.Image = SegmentImageWithGlobalTreshold(default_image, treshold);
         }
 
         private Bitmap GrayScale()
@@ -738,13 +745,6 @@ namespace VideoApp
             return hist;
         }
 
-        private void Yen(Bitmap default_image)
-        {
-            int[] hist = GetImageHistogram(default_image);
-            int treshold = YenTreshold(hist);
-            SegmentImageWithGlobalTreshold(default_image, treshold);
-        }
-
         private int YenTreshold(int[] data)
         {
             // Implements Yen  thresholding method
@@ -807,8 +807,9 @@ namespace VideoApp
         {
             btnYen.BackColor = candidateColor;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
-            Yen(default_image);
-            pictureBoxCamera.Image = default_image;
+            int[] hist = GetImageHistogram(default_image);
+            int treshold = YenTreshold(hist);
+            pictureBoxCamera.Image = SegmentImageWithGlobalTreshold(default_image, treshold);
         }
 
         int TriangleTreshold(int[] data, int length)
@@ -927,20 +928,13 @@ namespace VideoApp
                 return split;
         }
 
-        private void Triangle(Bitmap default_image)
-        {
-            int[] hist = GetImageHistogram(default_image);
-            int treshold = TriangleTreshold(hist, hist.GetLength(0));
-            SegmentImageWithGlobalTreshold(default_image, treshold);
-            pictureBoxCamera.Image = default_image;
-        }
-
         private void btnTriangle_Click(object sender, EventArgs e)
         {
             btnTriangle.BackColor = candidateColor;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
-            Triangle(default_image);
-
+            int[] hist = GetImageHistogram(default_image);
+            int treshold = TriangleTreshold(hist, hist.GetLength(0));
+            pictureBoxCamera.Image = SegmentImageWithGlobalTreshold(default_image, treshold);
         }
 
         private void btnToDefaultImage_Click(object sender, EventArgs e)
