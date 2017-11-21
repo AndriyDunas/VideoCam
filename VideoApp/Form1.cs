@@ -535,34 +535,49 @@ namespace VideoApp
             pictureBoxCamera.Image = SegmentImageWithGlobalTreshold(default_image, treshold);
         }
 
-        private void Niblack(Bitmap default_image, Bitmap new_image)
+        private Bitmap Niblack(Bitmap sourceBitmap)
         {
-            int height = default_image.Height;
-            int width = default_image.Width;
+            int w = Convert.ToInt32(textBoxNiblackStep.Text) / 2;
 
-            int w = Convert.ToInt32(textBoxNiblackStep.Text);
+            int width = sourceBitmap.Width;
+            int height = sourceBitmap.Height;
 
-            for (int x = 0; x < width; x++)
+            BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
+            byte[] resultBuffer = new byte[sourceData.Stride * sourceData.Height];
+
+            int[,] intencityArray = new int[width, height];
+
+            Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
+            sourceBitmap.UnlockBits(sourceData);
+            
+            for (int offsetY = 0; offsetY < height; offsetY++)
             {
-                for (int y = 0; y < height; ++y)
+                for (int offsetX = 0; offsetX < width; offsetX++)
+                {
+                    int byteOffset = offsetY * sourceData.Stride + offsetX * 4;
+                    Int32 pixelValue = BitConverter.ToInt32(pixelBuffer, byteOffset);
+                    byte[] pixel = BitConverter.GetBytes(pixelValue);
+                    Int32 pixelBright = (pixel[0] + pixel[1] + pixel[2]) / 3;
+                    intencityArray[offsetX, offsetY] = pixelBright;
+                }
+            }
+
+            for (int offsetY = w; offsetY < height - w; offsetY++)
+            {
+                for (int offsetX = w; offsetX < width - w; offsetX++)
                 {
                     double averageM = 0;
                     int totalWindowIntencity = 0;
                     int numberOfProcessedPixels = 0;
 
-                    for (int i = x - w / 2; i < x + w / 2; i++)
+                    for (int i = offsetX - w; i < offsetX + w; i++)
                     {
-                        for (int j = y - w / 2; j < y + w / 2; j++)
+                        for (int j = offsetY - w; j < offsetY + w; j++)
                         {
-                            if (i < 0 || i >= width || j < 0 || j >= height)
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                totalWindowIntencity += GetIntensityOfPixel(default_image, i, j);
-                                numberOfProcessedPixels++;
-                            }
+                            totalWindowIntencity += intencityArray[i, j];
+                            numberOfProcessedPixels++;
                         }
                     }
                     averageM = totalWindowIntencity / numberOfProcessedPixels;
@@ -571,47 +586,53 @@ namespace VideoApp
                     double averageS = 0;
                     numberOfProcessedPixels = 0;
 
-                    for (int i = x - w / 2; i < x + w / 2; i++)
+                    for (int i = offsetX - w; i < offsetX + w; i++)
                     {
-                        for (int j = y - w / 2; j < y + w / 2; j++)
+                        for (int j = offsetY - w; j < offsetY + w; j++)
                         {
-                            if (i < 0 || i >= width || j < 0 || j >= height)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                double intencity = GetIntensityOfPixel(default_image, i, j);
-                                double pow = Math.Pow(intencity - averageM, 2.0);
-                                sumOfWindow += pow;
-                                numberOfProcessedPixels++;
-                            }
+                            double pow = Math.Pow(intencityArray[i, j] - averageM, 2.0);
+                            sumOfWindow += pow;
+                            numberOfProcessedPixels++;
                         }
                     }
-                    averageS = Math.Sqrt(sumOfWindow / numberOfProcessedPixels);
 
-                    int localIntencity = GetIntensityOfPixel(default_image, x, y);
-                    double k = localIntencity <= 127 ? -0.2 : 0.2;
+                    averageS = Math.Sqrt(sumOfWindow / numberOfProcessedPixels);
+                    int byteOffset = offsetY * sourceData.Stride + offsetX * 4;
+                    int localBright = intencityArray[offsetX, offsetY];
+
+                    double k = localBright <= 127 ? -0.2 : 0.2;
                     double local_treshold = averageM + k * averageS;
-                    if (localIntencity <= local_treshold)
+                    if (localBright <= local_treshold)
                     {
-                        new_image.SetPixel(x, y, Color.Black);
+                        resultBuffer[byteOffset] = 0;
+                        resultBuffer[byteOffset + 1] = 0;
+                        resultBuffer[byteOffset + 2] = 0;
+                        resultBuffer[byteOffset + 3] = 255;
                     }
                     else
                     {
-                        new_image.SetPixel(x, y, Color.White);
+                        resultBuffer[byteOffset] = 255;
+                        resultBuffer[byteOffset + 1] = 255;
+                        resultBuffer[byteOffset + 2] = 255;
+                        resultBuffer[byteOffset + 3] = 255;
                     }
                 }
             }
+
+            Bitmap resultBitmap = new Bitmap(width, height);
+            BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            Marshal.Copy(resultBuffer, 0, resultData.Scan0, resultBuffer.Length);
+            resultBitmap.UnlockBits(resultData);
+
+            return resultBitmap;
         }
 
         private void btnNiblack_Click(object sender, EventArgs e)
         {
             btnNiblack.BackColor = candidateColor;
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
-            Bitmap new_image = new Bitmap(default_image);
-            Niblack(default_image, new_image);
-            pictureBoxCamera.Image = new_image;
+            pictureBoxCamera.Image = Niblack(default_image);
         }
 
         private int OtsuTreshold(int[] data)
