@@ -334,9 +334,8 @@ namespace VideoApp
             }
         }
 
-        void WhiteBorders()
+        Bitmap WhiteBorders(Bitmap sourceBitmap)
         {
-            Bitmap sourceBitmap = new Bitmap(pictureBoxCamera.Image);
             for (int x = 0; x < sourceBitmap.Width; x++)
             {
                 for (int y = 0; y < 15; y++)
@@ -370,7 +369,7 @@ namespace VideoApp
                     }
                 }
             }
-            pictureBoxCamera.Image = sourceBitmap;
+            return sourceBitmap;
         }
     }
 }

@@ -246,3 +246,6 @@ C:\Projects\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csprojResolveAssemblyRefere
 C:\Projects\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Form1.resources
 C:\Projects\VideoCam\VideoApp\obj\x86\Debug\VideoApp.Properties.Resources.resources
 C:\Projects\VideoCam\VideoApp\obj\x86\Debug\VideoApp.csproj.GenerateResource.Cache
+C:\Projects\VideoCam\VideoApp\bin\Debug\Bluetechnix.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\EnsensoN.dll
+C:\Projects\VideoCam\VideoApp\bin\Debug\SoftKinetic.dll

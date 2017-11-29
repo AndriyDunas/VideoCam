@@ -114,8 +114,6 @@ namespace VideoApp
             Thread.Sleep(1500);
             btnTriangle_Click(null, null);
 
-            Thread.Sleep(1500);
-
             btnSimpleBinarize.BackColor = Control.DefaultBackColor;
             btnYen.BackColor = Control.DefaultBackColor;
             btnTriangle.BackColor = Control.DefaultBackColor;

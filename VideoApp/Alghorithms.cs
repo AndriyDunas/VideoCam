@@ -184,8 +184,8 @@ namespace VideoApp
             Bitmap default_image = new Bitmap(pictureBoxCamera.Image);
             int[] hist = GetImageHistogram(default_image);
             int treshold = TriangleTreshold(hist, hist.GetLength(0));
-            pictureBoxCamera.Image = SegmentImageWithGlobalTreshold(default_image, treshold);
-            WhiteBorders();
+            default_image = SegmentImageWithGlobalTreshold(default_image, treshold);
+            pictureBoxCamera.Image = WhiteBorders(default_image);
         }
 
         private void btnSimpleBinarize_Click(object sender, EventArgs e)
