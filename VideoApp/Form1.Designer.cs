@@ -88,11 +88,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.btnDemonstrateMethods = new System.Windows.Forms.Button();
             this.btnSSIM = new System.Windows.Forms.Button();
             this.textBoxDeviationSSIM = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.btnDemonstrateMethods = new System.Windows.Forms.Button();
+            this.btnVeryLow = new System.Windows.Forms.Button();
+            this.btnLow = new System.Windows.Forms.Button();
+            this.btnMedium = new System.Windows.Forms.Button();
+            this.btnHigh = new System.Windows.Forms.Button();
+            this.btnVeryHigh = new System.Windows.Forms.Button();
+            this.btnAdjustMetod = new System.Windows.Forms.Button();
             this.panelUnused.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -687,10 +693,6 @@
             this.pictureBoxCamera.Size = new System.Drawing.Size(682, 289);
             this.pictureBoxCamera.TabIndex = 0;
             this.pictureBoxCamera.TabStop = false;
-            this.pictureBoxCamera.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxCamera_Paint);
-            this.pictureBoxCamera.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseDown);
-            this.pictureBoxCamera.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseMove);
-            this.pictureBoxCamera.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCamera_MouseUp);
             // 
             // label1
             // 
@@ -751,6 +753,35 @@
             this.panel5.Size = new System.Drawing.Size(482, 121);
             this.panel5.TabIndex = 61;
             // 
+            // btnSSIM
+            // 
+            this.btnSSIM.Location = new System.Drawing.Point(381, 60);
+            this.btnSSIM.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSSIM.Name = "btnSSIM";
+            this.btnSSIM.Size = new System.Drawing.Size(80, 32);
+            this.btnSSIM.TabIndex = 56;
+            this.btnSSIM.Text = "SSIM";
+            this.btnSSIM.UseVisualStyleBackColor = true;
+            this.btnSSIM.Click += new System.EventHandler(this.btnSSIM_Click);
+            // 
+            // textBoxDeviationSSIM
+            // 
+            this.textBoxDeviationSSIM.Location = new System.Drawing.Point(381, 28);
+            this.textBoxDeviationSSIM.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxDeviationSSIM.Name = "textBoxDeviationSSIM";
+            this.textBoxDeviationSSIM.Size = new System.Drawing.Size(80, 22);
+            this.textBoxDeviationSSIM.TabIndex = 57;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(377, 7);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 17);
+            this.label3.TabIndex = 58;
+            this.label3.Text = "Deviation:";
+            // 
             // panel6
             // 
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -782,40 +813,77 @@
             this.btnDemonstrateMethods.UseVisualStyleBackColor = true;
             this.btnDemonstrateMethods.Click += new System.EventHandler(this.btnDemonstrateMethods_Click);
             // 
-            // btnSSIM
+            // btnVeryLow
             // 
-            this.btnSSIM.Location = new System.Drawing.Point(381, 60);
-            this.btnSSIM.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSSIM.Name = "btnSSIM";
-            this.btnSSIM.Size = new System.Drawing.Size(80, 32);
-            this.btnSSIM.TabIndex = 56;
-            this.btnSSIM.Text = "SSIM";
-            this.btnSSIM.UseVisualStyleBackColor = true;
-            this.btnSSIM.Click += new System.EventHandler(this.btnSSIM_Click);
+            this.btnVeryLow.Location = new System.Drawing.Point(950, 330);
+            this.btnVeryLow.Name = "btnVeryLow";
+            this.btnVeryLow.Size = new System.Drawing.Size(107, 34);
+            this.btnVeryLow.TabIndex = 64;
+            this.btnVeryLow.Text = "Very Low";
+            this.btnVeryLow.UseVisualStyleBackColor = true;
+            this.btnVeryLow.Click += new System.EventHandler(this.btnVeryLow_Click);
             // 
-            // textBoxDeviationSSIM
+            // btnLow
             // 
-            this.textBoxDeviationSSIM.Location = new System.Drawing.Point(381, 28);
-            this.textBoxDeviationSSIM.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxDeviationSSIM.Name = "textBoxDeviationSSIM";
-            this.textBoxDeviationSSIM.Size = new System.Drawing.Size(80, 22);
-            this.textBoxDeviationSSIM.TabIndex = 57;
+            this.btnLow.Location = new System.Drawing.Point(950, 366);
+            this.btnLow.Name = "btnLow";
+            this.btnLow.Size = new System.Drawing.Size(107, 34);
+            this.btnLow.TabIndex = 65;
+            this.btnLow.Text = "Low";
+            this.btnLow.UseVisualStyleBackColor = true;
+            this.btnLow.Click += new System.EventHandler(this.btnLow_Click);
             // 
-            // label3
+            // btnMedium
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(377, 7);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 17);
-            this.label3.TabIndex = 58;
-            this.label3.Text = "Deviation:";
+            this.btnMedium.Location = new System.Drawing.Point(950, 401);
+            this.btnMedium.Name = "btnMedium";
+            this.btnMedium.Size = new System.Drawing.Size(107, 34);
+            this.btnMedium.TabIndex = 66;
+            this.btnMedium.Text = "Medium";
+            this.btnMedium.UseVisualStyleBackColor = true;
+            this.btnMedium.Click += new System.EventHandler(this.btnMedium_Click);
+            // 
+            // btnHigh
+            // 
+            this.btnHigh.Location = new System.Drawing.Point(950, 439);
+            this.btnHigh.Name = "btnHigh";
+            this.btnHigh.Size = new System.Drawing.Size(107, 34);
+            this.btnHigh.TabIndex = 67;
+            this.btnHigh.Text = "High";
+            this.btnHigh.UseVisualStyleBackColor = true;
+            this.btnHigh.Click += new System.EventHandler(this.btnHigh_Click);
+            // 
+            // btnVeryHigh
+            // 
+            this.btnVeryHigh.Location = new System.Drawing.Point(950, 477);
+            this.btnVeryHigh.Name = "btnVeryHigh";
+            this.btnVeryHigh.Size = new System.Drawing.Size(107, 34);
+            this.btnVeryHigh.TabIndex = 68;
+            this.btnVeryHigh.Text = "Very High";
+            this.btnVeryHigh.UseVisualStyleBackColor = true;
+            this.btnVeryHigh.Click += new System.EventHandler(this.btnVeryHigh_Click);
+            // 
+            // btnAdjustMetod
+            // 
+            this.btnAdjustMetod.Location = new System.Drawing.Point(1078, 395);
+            this.btnAdjustMetod.Name = "btnAdjustMetod";
+            this.btnAdjustMetod.Size = new System.Drawing.Size(116, 46);
+            this.btnAdjustMetod.TabIndex = 69;
+            this.btnAdjustMetod.Text = "Adjust Method";
+            this.btnAdjustMetod.UseVisualStyleBackColor = true;
+            this.btnAdjustMetod.Click += new System.EventHandler(this.btnAdjustMetod_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1561, 502);
+            this.ClientSize = new System.Drawing.Size(1561, 523);
+            this.Controls.Add(this.btnAdjustMetod);
+            this.Controls.Add(this.btnVeryHigh);
+            this.Controls.Add(this.btnHigh);
+            this.Controls.Add(this.btnMedium);
+            this.Controls.Add(this.btnLow);
+            this.Controls.Add(this.btnVeryLow);
             this.Controls.Add(this.btnDemonstrateMethods);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel5);
@@ -920,6 +988,12 @@
         private System.Windows.Forms.Button btnSSIM;
         private System.Windows.Forms.TextBox textBoxDeviationSSIM;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnVeryLow;
+        private System.Windows.Forms.Button btnLow;
+        private System.Windows.Forms.Button btnMedium;
+        private System.Windows.Forms.Button btnHigh;
+        private System.Windows.Forms.Button btnVeryHigh;
+        private System.Windows.Forms.Button btnAdjustMetod;
     }
 }
 

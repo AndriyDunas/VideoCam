@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace Lomont
 {
@@ -348,10 +350,9 @@ namespace Lomont
         /// Convert a Bitmap to a grayscale Grid                                                                                                    
         /// </summary>                                                                                                                              
         /// <returns></returns>                                                                                                                     
-        static Grid ConvertBitmap(Bitmap bmp)
+        static Grid ConvertBitmap(Bitmap sourceBitmap)
         {
-            return Grid.Op((i, j) => { Color c = bmp.GetPixel(i, j); return 0.3 * c.R + 0.59 * c.G + 0.11 * c.B; }, new Grid(bmp.Width, bmp.Height));
-        }
+            return Grid.Op((i, j) => { Color c = sourceBitmap.GetPixel(i, j); return 0.3 * c.R + 0.59 * c.G + 0.11 * c.B; }, new Grid(sourceBitmap.Width, sourceBitmap.Height));        }
         #endregion // Conversion
 
         #endregion

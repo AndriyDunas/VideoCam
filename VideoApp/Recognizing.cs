@@ -333,5 +333,44 @@ namespace VideoApp
                 countOfElems++;
             }
         }
+
+        void WhiteBorders()
+        {
+            Bitmap sourceBitmap = new Bitmap(pictureBoxCamera.Image);
+            for (int x = 0; x < sourceBitmap.Width; x++)
+            {
+                for (int y = 0; y < 15; y++)
+                {
+                    if (GetIntensityOfPixel(sourceBitmap, x, y) < 127)
+                    {
+                        sourceBitmap.SetPixel(x, y, Color.White);
+                        imageMatrix[x][y] = 0;
+                    }
+                }
+            }
+            for (int x = 0; x < 40; x++)
+            {
+                for (int y = sourceBitmap.Height - 15; y < sourceBitmap.Height; y++)
+                {
+                    if (GetIntensityOfPixel(sourceBitmap, x, y) < 127)
+                    {
+                        sourceBitmap.SetPixel(x, y, Color.White);
+                        imageMatrix[x][y] = 0;
+                    }
+                }
+            }
+            for (int x = sourceBitmap.Width - 40; x < sourceBitmap.Width; x++)
+            {
+                for (int y = sourceBitmap.Height - 15; y < sourceBitmap.Height; y++)
+                {
+                    if (GetIntensityOfPixel(sourceBitmap, x, y) < 127)
+                    {
+                        sourceBitmap.SetPixel(x, y, Color.White);
+                        imageMatrix[x][y] = 0;
+                    }
+                }
+            }
+            pictureBoxCamera.Image = sourceBitmap;
+        }
     }
 }

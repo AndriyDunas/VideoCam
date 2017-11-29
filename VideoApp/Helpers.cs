@@ -65,7 +65,6 @@ namespace VideoApp
             {
                 imageMatrix[i] = new int[sourceBitmap.Height];
             }
-
             BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
 
             byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
@@ -112,6 +111,67 @@ namespace VideoApp
             resultBitmap.UnlockBits(resultData);
 
             return resultBitmap;
+        }
+
+        private void UpdateImageMatrix(Bitmap sourceBitmap, int _treshold = 127)
+        {
+            BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
+
+            Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
+            sourceBitmap.UnlockBits(sourceData);
+
+            int byteOffset = 0;
+
+            for (int offsetY = 0; offsetY < sourceBitmap.Height; offsetY++)
+            {
+                for (int offsetX = 0; offsetX < sourceBitmap.Width; offsetX++)
+                {
+                    byteOffset = offsetY * sourceData.Stride + offsetX * 4;
+
+                    Int32 pixelValue = BitConverter.ToInt32(pixelBuffer, byteOffset);
+                    byte[] pixel = BitConverter.GetBytes(pixelValue);
+                    Int32 pixelBright = (pixel[0] + pixel[1] + pixel[2]) / 3;
+
+                    if (pixelBright < _treshold)
+                    {
+                        imageMatrix[offsetX][offsetY] = 1;
+                    }
+                    else
+                    {
+                        imageMatrix[offsetX][offsetY] = 0;
+                    }
+                }
+            }
+        }
+
+        private int GetAverageIntencity()
+        {
+            Bitmap sourceBitmap = new Bitmap(pictureBoxCamera.Image);
+            BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
+
+            Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
+            sourceBitmap.UnlockBits(sourceData);
+
+            int byteOffset = 0;
+            int brightnessSum = 0;
+
+            for (int offsetY = 0; offsetY < sourceBitmap.Height; offsetY++)
+            {
+                for (int offsetX = 0; offsetX < sourceBitmap.Width; offsetX++)
+                {
+                    byteOffset = offsetY * sourceData.Stride + offsetX * 4;
+
+                    Int32 pixelValue = BitConverter.ToInt32(pixelBuffer, byteOffset);
+                    byte[] pixel = BitConverter.GetBytes(pixelValue);
+                    Int32 pixelBright = (pixel[0] + pixel[1] + pixel[2]) / 3;
+                    brightnessSum += pixelBright;
+                }
+            }
+            return brightnessSum / (sourceBitmap.Height * sourceBitmap.Width);
         }
     }
 }

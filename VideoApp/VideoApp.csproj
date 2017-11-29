@@ -255,6 +255,13 @@
   <ItemGroup>
     <None Include="Resources\digits_rotated_plus_3.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\digits_142.jpg" />
+    <Content Include="Resources\digits_166.jpg" />
+    <Content Include="Resources\digits_205.jpg" />
+    <Content Include="Resources\digits_32.jpg" />
+    <Content Include="Resources\digits_82.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

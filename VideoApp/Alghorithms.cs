@@ -185,6 +185,7 @@ namespace VideoApp
             int[] hist = GetImageHistogram(default_image);
             int treshold = TriangleTreshold(hist, hist.GetLength(0));
             pictureBoxCamera.Image = SegmentImageWithGlobalTreshold(default_image, treshold);
+            WhiteBorders();
         }
 
         private void btnSimpleBinarize_Click(object sender, EventArgs e)
@@ -197,6 +198,11 @@ namespace VideoApp
 
         private Bitmap Niblack(Bitmap sourceBitmap)
         {
+            imageMatrix = new int[sourceBitmap.Width][];
+            for (int i = 0; i < sourceBitmap.Width; i++)
+            {
+                imageMatrix[i] = new int[sourceBitmap.Height];
+            }
             int w = Convert.ToInt32(textBoxNiblackStep.Text) / 2;
 
             int width = sourceBitmap.Width;
@@ -268,6 +274,7 @@ namespace VideoApp
                         resultBuffer[byteOffset + 1] = 0;
                         resultBuffer[byteOffset + 2] = 0;
                         resultBuffer[byteOffset + 3] = 255;
+                        imageMatrix[offsetX][offsetY] = 1;
                     }
                     else
                     {
@@ -275,6 +282,7 @@ namespace VideoApp
                         resultBuffer[byteOffset + 1] = 255;
                         resultBuffer[byteOffset + 2] = 255;
                         resultBuffer[byteOffset + 3] = 255;
+                        imageMatrix[offsetX][offsetY] = 0;
                     }
                 }
             }

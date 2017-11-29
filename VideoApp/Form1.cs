@@ -57,6 +57,8 @@ namespace VideoApp
         double[][] affineMulMatrix;
         double[] pointVector;
 
+        int averageIntencity = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -76,12 +78,19 @@ namespace VideoApp
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             aTimer.Interval = 1000;
 
+            Bitmap sourceBitmap = new Bitmap(pictureBoxCamera.Image);
+            imageMatrix = new int[sourceBitmap.Width][];
+            for (int i = 0; i < sourceBitmap.Width; i++)
+            {
+                imageMatrix[i] = new int[sourceBitmap.Height];
+            }
+            averageIntencity = GetAverageIntencity();
         }
 
         // Specify what you want to happen when the Elapsed event is raised.
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            //aTimer.Enabled = false;
+            aTimer.Enabled = false;
             originalImage = new Bitmap(pictureBoxCamera.Image);
             btnSimpleBinarize_Click(null, null);
             Thread.Sleep(1500);
@@ -104,7 +113,14 @@ namespace VideoApp
             pictureBoxCamera.Image = originalImage;
             Thread.Sleep(1500);
             btnTriangle_Click(null, null);
+
             Thread.Sleep(1500);
+
+            btnSimpleBinarize.BackColor = Control.DefaultBackColor;
+            btnYen.BackColor = Control.DefaultBackColor;
+            btnTriangle.BackColor = Control.DefaultBackColor;
+            btnOtsu.BackColor = Control.DefaultBackColor;
+            btnNiblack.BackColor = Control.DefaultBackColor;
 
             //pictureBoxCamera.Image = originalImage;
         }
@@ -114,6 +130,60 @@ namespace VideoApp
             aTimer.Enabled = true;
         }
 
+        private void btnVeryLow_Click(object sender, EventArgs e)
+        {
+            pictureBoxCamera.Image = VideoApp.Properties.Resources.digits_32;
+        }
 
+        private void btnLow_Click(object sender, EventArgs e)
+        {
+            pictureBoxCamera.Image = VideoApp.Properties.Resources.digits_82;
+        }
+
+        private void btnMedium_Click(object sender, EventArgs e)
+        {
+            pictureBoxCamera.Image = VideoApp.Properties.Resources.digits_142;
+        }
+
+        private void btnHigh_Click(object sender, EventArgs e)
+        {
+            pictureBoxCamera.Image = VideoApp.Properties.Resources.digits_166;
+        }
+
+        private void btnVeryHigh_Click(object sender, EventArgs e)
+        {
+            pictureBoxCamera.Image = VideoApp.Properties.Resources.digits_205;
+        }
+
+        private void btnAdjustMetod_Click(object sender, EventArgs e)
+        {
+            btnSimpleBinarize.BackColor = Control.DefaultBackColor;
+            btnYen.BackColor = Control.DefaultBackColor;
+            btnTriangle.BackColor = Control.DefaultBackColor;
+            btnOtsu.BackColor = Control.DefaultBackColor;
+            btnNiblack.BackColor = Control.DefaultBackColor;
+
+            averageIntencity = GetAverageIntencity();
+            if (averageIntencity <= 50)
+            {
+                btnNiblack_Click(null, null); ;
+            }
+            else if (averageIntencity >= 51 && averageIntencity <= 100)
+            {
+                btnTriangle_Click(null, null);
+            }
+            else if (averageIntencity >= 101 && averageIntencity <= 150)
+            {
+                btnSimpleBinarize_Click(null, null);
+            }
+            else if (averageIntencity >= 151 && averageIntencity <= 200)
+            {
+                btnOtsu_Click(null, null);
+            }
+            else if (averageIntencity >= 201)
+            {
+                btnYen_Click(null, null);
+            }
+        }
     }
 }

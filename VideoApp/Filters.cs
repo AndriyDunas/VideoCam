@@ -67,6 +67,8 @@ namespace VideoApp
             Marshal.Copy(resultBuffer, 0, resultData.Scan0, resultBuffer.Length);
             resultBitmap.UnlockBits(resultData);
 
+            UpdateImageMatrix(resultBitmap);
+            
             return resultBitmap;
         }
 
@@ -85,7 +87,7 @@ namespace VideoApp
 
             int w = Convert.ToInt32(textBoxNPixels.Text);
 
-            int NumberTres = 3;//Convert.ToInt32(textBoxPixelsTres.Text);
+            int NumberTres = 4;//Convert.ToInt32(textBoxPixelsTres.Text);
 
             for (int x = w / 2; x < width; x += w)
             {
@@ -116,6 +118,7 @@ namespace VideoApp
                     }
                 }
             }
+            UpdateImageMatrix(new_image);
         }
 
         private void btnNPixelsFilter_Click(object sender, EventArgs e)
